@@ -41,7 +41,10 @@ def main() -> int:
     host, port = args.host, args.port
     client = carla.Client(host, port)
     client.set_timeout(120.0)
-    world = client.load_world(cfg.get("map", "Town01"))
+    # NOTE: do NOT call client.load_world() here. Runtime map reload is unstable
+    # on the headless Vulkan build (segfault). Use the map the server started with.
+    world = client.get_world()
+    map_name = world.get_map().name
 
     # Synchronous mode with fixed time step
     settings = world.get_settings()
@@ -140,7 +143,7 @@ def main() -> int:
         "run_id": run_id,
         "carla_client": getattr(carla, "__version__", "0.9.16"),
         "carla_server": client.get_server_version(),
-        "map": cfg.get("map", "Town01"),
+        "map": map_name,
         "steps": steps,
         "fixed_delta_seconds": settings.fixed_delta_seconds,
         "config": cfg,

@@ -1,4 +1,6 @@
-map: Town01
+# Map is chosen at server startup (start_carla.sh). Default: Town10HD_Opt.
+# Runtime load_world() is unstable on the headless Vulkan build.
+map: Town10HD_Opt
 vehicle: vehicle.tesla.model3
 width: 640
 height: 360
