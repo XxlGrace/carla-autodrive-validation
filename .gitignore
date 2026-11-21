@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Environments
+.env
+.venv/
+envs/
+
+# CARLA binaries and big artifacts (never commit)
+CARLA_*/
+*.tar.gz
+*.egg
+*.whl
+
+# Experiment outputs
+runs/
+carla-runs/
+*.png
+*.mp4
+*.csv
+*.log
+*.json
+
+# Editors
+.vscode/
+.idea/
+.DS_Store

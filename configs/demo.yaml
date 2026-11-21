@@ -1,0 +1,8 @@
+map: Town01
+vehicle: vehicle.tesla.model3
+width: 640
+height: 360
+fov: 90
+fixed_delta_seconds: 0.05
+steps: 200
+throttle: 0.5

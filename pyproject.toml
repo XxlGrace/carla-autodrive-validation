@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "carla-safety"
+version = "0.1.0"
+description = "CARLA closed-loop safety validation starter"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy==1.26.4",
+  "pyyaml>=6.0",
+  "Pillow>=10.0",
+]
+
+[project.scripts]
+carla-smoke = "carla_safety.smoke:main"
+carla-run = "carla_safety.run:main"
+
+[tool.setuptools.packages.find]
+include = ["carla_safety*"]
