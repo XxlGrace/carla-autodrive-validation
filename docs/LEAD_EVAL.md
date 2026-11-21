@@ -44,3 +44,21 @@ python -m lead --checkpoint checkpoints/transfuser \
 - `client.load_world()` → SIGSEGV（见上，补丁 + 服务端定图规避）。
 - “Problem reading checkpoint. Found no data” 是 evaluator 的 resume 端点文件不存在，首次运行正常，可忽略。
 - 场景 `SignalizedJunctionLeftTurn_*`、`OppositeVehicleRunningRedLight_*` 在本地图会因找不到对向车道被跳过，属地图/路线组合问题。
+
+## 实测结果（2026-11-21，完整路线）
+
+`longest6/00.xml`（Town01，11 个场景）完整跑通，日志 `/root/autodl-tmp/lead_full_eval.log`：
+
+| 指标 | 结果 |
+|---|---|
+| Route Completion | **100%** |
+| Collision | 0 |
+| Running Red Light | 0 |
+| Running Stop | 0 |
+| Outside Route Lanes | 0% |
+| 其余 6 项 | 全部 SUCCESS |
+| **Driving Score** | **100**（100% × 无惩罚）|
+| 用时 | System 766.9s / Game 236.7s，Ratio 0.309× |
+| 退出码 | 0 |
+
+结论：推荐的 `resnet34_v1.5.0/seed0` 权重在本机无头环境下闭环可用，单条路线满分。
