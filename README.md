@@ -33,6 +33,10 @@ python -m carla_safety.run --config configs/demo.yaml --output-root /root/autodl
 bash scripts/stop_carla.sh
 ```
 
+## 验证状态
+
+✅ M0–M2 底座已跑通（2026-11-21）：CARLA 0.9.16 服务端 + 非 root 离屏渲染 + 真实 RGB 闭环 + 逐帧遥测。详细证据与已知问题见 [`docs/VALIDATION.md`](docs/VALIDATION.md)。
+
 ## 接口边界
 
 - **Observation**：CARLA RGB 相机（前视），`sensor_tick=0.0`，每 tick 同帧落盘。
