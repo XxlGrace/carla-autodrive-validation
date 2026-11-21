@@ -103,8 +103,10 @@ def main() -> int:
                 control = carla.VehicleControl(throttle=0.0, brake=1.0)
             ego.apply_control(control)
 
-            world.tick()  # in sync mode this waits for the frame to be ready
-            world.wait_for_tick()
+            # In sync mode tick() itself blocks until the frame is rendered.
+            # Do NOT call wait_for_tick() here: no further tick will be issued
+            # until this returns, so it would deadlock.
+            world.tick()
 
             loc = ego.get_location()
             vel = ego.get_velocity()
