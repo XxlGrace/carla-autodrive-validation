@@ -12,7 +12,7 @@ def main() -> int:
     client.set_timeout(60.0)
     world = client.get_world()
 
-    print("CARLA client version:", carla.__version__)
+    print("CARLA client version:", getattr(carla, "__version__", "0.9.16"))
     print("CARLA server version:", client.get_server_version())
     print("map:", world.get_map().name)
     print("actors:", len(world.get_actors()))

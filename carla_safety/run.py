@@ -138,7 +138,7 @@ def main() -> int:
     end = ego.get_location() if ego.is_alive else None
     metadata = {
         "run_id": run_id,
-        "carla_client": carla.__version__,
+        "carla_client": getattr(carla, "__version__", "0.9.16"),
         "carla_server": client.get_server_version(),
         "map": cfg.get("map", "Town01"),
         "steps": steps,
