@@ -19,11 +19,14 @@ fi
 LOG_FILE="$LOG_DIR/server.log"
 echo "$LOG_FILE" > "$LOG_DIR/current_log.txt"
 
-runuser -u "$RUNNER" -- env \
-  "VK_ICD_FILENAMES=${VK_ICD_FILENAMES:-}" \
-  "CARLA_QUALITY=$QUALITY" \
-  bash -c "cd '$CARLA_DIR' && exec ./CarlaUE4.sh -RenderOffScreen -nosound -quality-level=$QUALITY -carla-rpc-port=$RPC_PORT" \
-  > "$LOG_FILE" 2>&1 &
+RUN_CMD="cd '$CARLA_DIR' && exec ./CarlaUE4.sh -RenderOffScreen -nosound -quality-level=$QUALITY -carla-rpc-port=$RPC_PORT"
+if [ -n "${VK_ICD_FILENAMES:-}" ]; then
+  runuser -u "$RUNNER" -- env VK_ICD_FILENAMES="$VK_ICD_FILENAMES" CARLA_QUALITY="$QUALITY" \
+    bash -c "$RUN_CMD" > "$LOG_FILE" 2>&1 &
+else
+  runuser -u "$RUNNER" -- env CARLA_QUALITY="$QUALITY" \
+    bash -c "$RUN_CMD" > "$LOG_FILE" 2>&1 &
+fi
 
 echo $! > "$LOG_DIR/carla.pid"
 echo "CARLA starting (PID $(cat "$LOG_DIR/carla.pid")), quality=$QUALITY, rpc=$RPC_PORT"
