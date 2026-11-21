@@ -11,7 +11,7 @@ RPC_PORT=${CARLA_RPC_PORT:-2000}
 mkdir -p "$LOG_DIR" "$CARLA_DIR/CarlaUE4/Saved"
 
 # Only use custom ICD when it actually exists
-ICD=/etc/vulkan/icd.d/my_nvidia_icd.json
+ICD=/etc/vulkan/icd.d/nvidia_icd.json
 if [ -f "$ICD" ]; then
   export VK_ICD_FILENAMES="$ICD"
 fi
@@ -19,9 +19,9 @@ fi
 LOG_FILE="$LOG_DIR/server.log"
 echo "$LOG_FILE" > "$LOG_DIR/current_log.txt"
 
-RUN_CMD="cd '$CARLA_DIR' && exec ./CarlaUE4.sh -RenderOffScreen -nosound -quality-level=$QUALITY -carla-rpc-port=$RPC_PORT"
+RUN_CMD="cd '$CARLA_DIR' && exec ./CarlaUE4.sh -RenderOffScreen -nosound -quality-level=$QUALITY -carla-rpc-port=$RPC_PORT -world-port=$RPC_PORT -graphicsadapter=0 -resx=800 -resy=600"
 if [ -n "${VK_ICD_FILENAMES:-}" ]; then
-  runuser -u "$RUNNER" -- env VK_ICD_FILENAMES="$VK_ICD_FILENAMES" CARLA_QUALITY="$QUALITY" \
+  runuser -u "$RUNNER" -- env VK_ICD_FILENAMES="$VK_ICD_FILENAMES" __NV_PRIME_RENDER_OFFLOAD=1 CARLA_QUALITY="$QUALITY" \
     bash -c "$RUN_CMD" > "$LOG_FILE" 2>&1 &
 else
   runuser -u "$RUNNER" -- env CARLA_QUALITY="$QUALITY" \
