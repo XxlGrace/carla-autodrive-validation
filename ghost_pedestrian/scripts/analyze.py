@@ -83,6 +83,10 @@ for name in NAMES:
     else:
         area = bticks = amin = clear_t = req_v = None
     out.append({
+        "release_frame": s.get("release_frame"),
+        "actual_trigger_distance_m": fnum(s.get("actual_trigger_distance_m")),
+        "visible_time_s": fnum(s.get("visible_time_s")),
+        "oracle_mode": s.get("oracle_mode"),
         "brake_effort_area_3s": fnum(area),
         "brake_ticks_3s": bticks,
         "min_speed_3s_mps": fnum(amin),
@@ -110,7 +114,10 @@ for name in NAMES:
         "walker_crossed_ego_path": crossed,
         "criteria": crit,
         "outcome": ("COLLISION" if collision else
-                    ("SAFE_AVOIDANCE" if s.get("sustained_brake_after_release_s") is not None
+                    ("SAFE_AVOIDANCE" if (
+                        s.get("sustained_brake_after_release_s") is not None
+                        or s.get("oracle_mode")
+                        or s.get("brake_effort_area_3s"))
                      else "CONTROL")),
     })
 
@@ -118,7 +125,9 @@ with open(os.path.join(RESULTS, "summary.json"), "w") as fh:
     json.dump(out, fh, indent=2)
 
 # CSV for plotting
-cols = ["run", "trigger_m", "collision_ped", "min_dist_m",
+cols = ["run", "trigger_m", "oracle_mode", "release_frame",
+        "actual_trigger_distance_m", "visible_time_s",
+        "collision_ped", "min_dist_m",
         "sustained_brake_after_release_s", "reaction_window_s",
         "brake_latency_after_lane_entry_s", "ego_speed_at_cross_mps",
         "max_decel_mps2", "required_stop_dist_m", "physical_margin_m",
@@ -165,3 +174,24 @@ for r in out:
         r["min_speed_3s_mps"], r["required_mean_speed_to_yield_mps"],
         r["ped_lane_clear_after_release_s"], r["physical_margin_m"],
         r["outcome"]))
+
+print("\n=== P1: ACTUAL TRIGGER / FRAME (discretisation check) ===")
+print("%-16s %6s %8s %10s %9s %8s" % (
+    "run", "nominal", "frame", "actualTrig", "visRel", "outcome"))
+for r in out:
+    if r["trigger_m"] is None:
+        continue
+    print("%-16s %6s %8s %10s %9s %8s" % (
+        r["run"], r["trigger_m"], r["release_frame"],
+        r["actual_trigger_distance_m"], r["visible_time_s"], r["outcome"]))
+
+print("\n=== P2: ORACLE BRAKE COUNTERFACTUALS ===")
+print("%-18s %6s %14s %9s %10s %9s %9s %s" % (
+    "run", "trig", "mode", "collision", "minDist", "minSpd", "brakeArea", "outcome"))
+for r in out:
+    if not r["oracle_mode"]:
+        continue
+    print("%-18s %6s %14s %9s %10s %9s %9s %s" % (
+        r["run"], r["trigger_m"], r["oracle_mode"], r["collision_ped"],
+        r["min_dist_m"], r["min_speed_3s_mps"],
+        r["brake_effort_area_3s"], r["outcome"]))

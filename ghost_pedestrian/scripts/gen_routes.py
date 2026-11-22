@@ -88,4 +88,24 @@ for d, suffix in ((24, "24m_r2"), (25, "25m_r2")):
              output_dir=OUTROOT + "/gp_{}".format(suffix))
     write_route("{}.xml".format(name.lower()), [scenario_block(name, p)])
 
+# Oracle Brake counterfactuals: same scene, controlled emergency braking
+# instead of the LEAD command. Groups: immediate / visible / visible+delay.
+ORACLE = [
+    ("24m_or_immediate", 24, "immediate", 0.0, 1.0),
+    ("24m_or_visible", 24, "visible", 0.0, 1.0),
+    ("24m_or_delay020", 24, "visible_delay", 0.2, 1.0),
+    ("24p25m_or_visible", 24.25, "visible", 0.0, 1.0),
+    ("20m_or_immediate", 20, "immediate", 0.0, 1.0),
+    ("20m_or_visible", 20, "visible", 0.0, 1.0),
+    # Moderate braking: is full emergency brake actually necessary?
+    ("24m_or_visible_b03", 24, "visible", 0.0, 0.3),
+    ("24m_or_visible_b05", 24, "visible", 0.0, 0.5),
+]
+for tag, d, mode, delay, brake in ORACLE:
+    name = "GP_" + tag
+    p = dict(BASE, walker_enabled="1", trigger_distance=str(d),
+             oracle_mode=mode, oracle_brake=str(brake), oracle_delay=str(delay),
+             output_dir=OUTROOT + "/gp_" + tag)
+    write_route("gp_{}.xml".format(tag), [scenario_block(name, p)])
+
 print("done")

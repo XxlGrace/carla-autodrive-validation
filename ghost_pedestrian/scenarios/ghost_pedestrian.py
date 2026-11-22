@@ -76,6 +76,11 @@ class _GhostState:
         self.collisions = []
         self.released = False
         self.release_time = None
+        self.release_frame = None
+        self.actual_trigger_distance_m = None
+        self.visible_time = None
+        self.oracle_mode = None
+        self.oracle_active_logged = False
         self.brake_onset = None
         self.min_dist = float("inf")
         self.min_dist_time = None
@@ -182,6 +187,12 @@ class _GhostState:
         summary = {
             "status": "final",
             "trigger_distance_m": self.trigger_distance,
+            "actual_trigger_distance_m": self.actual_trigger_distance_m,
+            "release_frame": self.release_frame,
+            "visible_time_s": (round(self.visible_time - self.release_time, 3)
+                               if self.visible_time is not None
+                               and self.release_time is not None else None),
+            "oracle_mode": self.oracle_mode,
             "num_records": len(self.records),
             "collisions_all": self.collisions,
             "collision_pedestrian": len(ped_hits) > 0,
@@ -249,7 +260,12 @@ class ReleasePedestrian(AtomicBehavior):
         if not self.state.released:
             self.state.released = True
             self.state.release_time = GameTime.get_time()
-            _log("PEDESTRIAN RELEASED at t={:.3f}".format(self.state.release_time))
+            try:
+                self.state.release_frame = CarlaDataProvider.get_world().get_snapshot().frame
+            except Exception:
+                self.state.release_frame = None
+            _log("PEDESTRIAN RELEASED at t={:.3f} frame={}".format(
+                self.state.release_time, self.state.release_frame))
         return py_trees.common.Status.SUCCESS
 
 
@@ -320,6 +336,9 @@ class RecordGhostMetrics(AtomicBehavior):
         dist = _flat_dist(eloc, wloc) if wloc else None
         cross_dist = _flat_dist(eloc, self.crossing_loc)
 
+        if self.state.released and self.state.actual_trigger_distance_m is None:
+            self.state.actual_trigger_distance_m = round(cross_dist, 3)
+
         if wloc is not None and dist < self.state.min_dist:
             self.state.min_dist = dist
             self.state.min_dist_time = round(t, 3)
@@ -343,6 +362,12 @@ class RecordGhostMetrics(AtomicBehavior):
         ped_lateral = None if wloc is None else round(wloc.x - eloc.x, 3)
         ego_front_cross = round(cross_dist - self.EGO_HALF_LENGTH, 3)
 
+        occ = self._is_occluded(wloc)
+        if (self.state.released and self.state.visible_time is None
+                and wloc is not None and occ is False):
+            self.state.visible_time = t
+            _log("PEDESTRIAN GEOMETRICALLY VISIBLE at t={:.3f}".format(t))
+
         self.state.append_record({
             "t": round(t, 3),
             "ego_x": round(eloc.x, 3), "ego_y": round(eloc.y, 3),
@@ -356,12 +381,63 @@ class RecordGhostMetrics(AtomicBehavior):
             "released": self.state.released,
             # Always compute occlusion (also after release) so we can measure
             # when the pedestrian becomes visible relative to braking.
-            "occluded": self._is_occluded(wloc),
+            "occluded": occ,
             "ttc": ttc,
             "decel": decel,
             "ped_lateral": ped_lateral,
             "ego_front_cross": ego_front_cross,
         })
+        return py_trees.common.Status.RUNNING
+
+
+class OracleBrake(AtomicBehavior):
+    """Counterfactual control: override the agent with a controlled brake.
+
+    scenario_manager applies the agent command BEFORE ticking the scenario
+    tree, so re-applying a command here wins for the next physics step. Steer
+    is preserved from the agent command. Must be ticked BEFORE
+    RecordGhostMetrics so the trace records the override, not the agent cmd.
+    """
+
+    def __init__(self, state, ego, mode, brake=1.0, delay=0.0, name="OracleBrake"):
+        super(OracleBrake, self).__init__(name)
+        self.state = state
+        self.ego = ego
+        self.mode = mode            # immediate | visible | visible_delay
+        self.brake_cmd = float(brake)
+        self.delay = float(delay)
+        self.start_time = None
+
+    def _resolve_start(self):
+        if self.mode == "immediate":
+            return self.state.release_time
+        if self.mode in ("visible", "visible_delay"):
+            if self.state.visible_time is None:
+                return None
+            extra = self.delay if self.mode == "visible_delay" else 0.0
+            return self.state.visible_time + extra
+        return None
+
+    def update(self):
+        if not self.state.released:
+            return py_trees.common.Status.RUNNING
+        start = self._resolve_start()
+        if start is None:
+            return py_trees.common.Status.RUNNING
+        now = GameTime.get_time()
+        if now < start:
+            return py_trees.common.Status.RUNNING
+        try:
+            ctrl = self.ego.get_control()
+            ctrl.throttle = 0.0
+            ctrl.brake = self.brake_cmd
+            self.ego.apply_control(ctrl)
+            if not self.state.oracle_active_logged:
+                self.state.oracle_active_logged = True
+                _log("ORACLE BRAKE active at t={:.3f} mode={} brake={:.2f}".format(
+                    now, self.mode, self.brake_cmd))
+        except Exception as exc:
+            _log("ORACLE BRAKE apply failed: {}".format(exc))
         return py_trees.common.Status.RUNNING
 
 
@@ -448,6 +524,9 @@ class GhostPedestrian(BasicScenario):
         self.walker_enabled = int(gf("walker_enabled", 1)) == 1
         self.save_frames = int(gf("save_frames", 1)) == 1
         self.seed = int(gf("seed", 0))
+        self.oracle_mode = (p.get("oracle_mode", "") or "").strip()
+        self.oracle_brake = gf("oracle_brake", 1.0)
+        self.oracle_delay = gf("oracle_delay", 0.0)
         out_dir = p.get("output_dir") or "/root/autodl-tmp/ghost_runs/{}".format(config.name)
         self.out_dir = out_dir
         self.timeout = timeout
@@ -455,6 +534,7 @@ class GhostPedestrian(BasicScenario):
         self.state = _GhostState(out_dir, trigger_distance=self.trigger_distance,
                                  save_frames=self.save_frames,
                                  frame_every=5, max_frames=200)
+        self.state.oracle_mode = self.oracle_mode or None
         self._trigger_location = config.trigger_points[0].location
         self._wmap = CarlaDataProvider.get_map()
         self._walker = None
@@ -543,6 +623,11 @@ class GhostPedestrian(BasicScenario):
         root = py_trees.composites.Parallel(
             name="GhostPedestrian", policy=py_trees.common.ParallelPolicy.SUCCESS_ON_ONE,
         )
+        if self.oracle_mode:
+            root.add_child(OracleBrake(
+                self.state, self.ego_vehicles[0], self.oracle_mode,
+                brake=self.oracle_brake, delay=self.oracle_delay,
+            ))
         root.add_child(RecordGhostMetrics(
             self.state, self.ego_vehicles[0], self._walker, self._camera,
             getattr(self, "_occluder", None), self._crossing_loc,
