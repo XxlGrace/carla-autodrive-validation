@@ -65,6 +65,8 @@ python3 /root/autodl-tmp/carla-autodrive-validation/ghost_pedestrian/scripts/ana
 | GP 15 m | 15 | 是 | 0.787 | 0.10 | 8.35 | 1.80 | 0.812 | **碰撞** |
 | GP 9 m | 9 | 是 | 1.396 | 2.25 | 8.03 | 1.12 | 0.832 | **碰撞** |
 
+说明：`summary.json` 中 `brake_onset_after_release_s` 为 `null` 时表示**本次未发生制动**；`collision_pedestrian` 由碰撞传感器判定（接触 `walker.*` 即计为行人碰撞）。
+
 关键发现：
 
 1. **临界点位于 25 m 与 15 m 之间**：25 m 时 LEAD 有约 3.1 s TTC，制动后以 2.11 m 最小距离通过；15 m 时 TTC 仅 1.8 s，虽几乎立刻制动仍发生接触（最小距离 0.79 m）。
