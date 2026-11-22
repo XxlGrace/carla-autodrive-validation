@@ -61,9 +61,11 @@ v1 新增的逐帧字段：`decel`（瞬时减速度）、`ped_lateral`（行人
 
 上述为**初步判别**，不是最终定论。要严格区分「未及时感知」与「决策制动不足」，下一步需直接测量 LEAD 感知链路（见「后续」）。
 
-## 清理
+## 清理与已知数据瑕疵
 
 按确认仅清理临时文件：`/tmp/gp*.out`、`/tmp/*probe.out` 等评估临时输出已删除。完整保留：所有 `*.eval.log`、`trace.jsonl`、`summary.json`、`results/`、`routes/`、场景源码、`frames/` 与全部 Git 提交。可重建的中间产物（帧目录）未删除。
+
+分析中还发现一个采集端瑕疵：`Finalize` 写 summary 后，`RecordGhostMetrics` 仍继续向 `trace.jsonl` 追加记录（例如 24.5 m 运行的 trace 有 2088 行，而 summary 只记录 311 条）。这不影响任何指标（指标均取 dump 时刻的状态，机制分析只用释放后 3 s 窗口），但会造成文件虚胖。已在场景代码中修复：`dump()` 后 `append_record()` 直接返回，且该行为返回 SUCCESS 以结束行为树。已有 trace 保留原样以便复核，`analyze.py` 只取相关时间窗，不受影响。
 
 ## 后续（机制深挖路线）
 

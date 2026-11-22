@@ -96,6 +96,8 @@ class _GhostState:
 
     def append_record(self, record):
         """Persist each record immediately (crash-safe) and keep in memory."""
+        if self.dumped:
+            return
         self.records.append(record)
         with open(self.trace_path, "a") as f:
             f.write(json.dumps(record) + "\n")
@@ -306,6 +308,9 @@ class RecordGhostMetrics(AtomicBehavior):
             return None
 
     def update(self):
+        if self.state.dumped:
+            # Finalize already wrote the summary; stop the whole parallel tree.
+            return py_trees.common.Status.SUCCESS
         eloc = CarlaDataProvider.get_location(self.ego)
         wloc = CarlaDataProvider.get_location(self.walker) if self.walker else None
         ego_speed = float(CarlaDataProvider.get_velocity(self.ego))
