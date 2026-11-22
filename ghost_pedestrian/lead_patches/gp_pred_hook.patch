@@ -1,0 +1,146 @@
+--- transfuser_agent.orig.py	2026-11-22 16:44:39.954665575 +0800
++++ transfuser_agent.py	2026-11-22 16:44:26.198660706 +0800
+@@ -1,4 +1,6 @@
++import json
+ import logging
++import os
+ import typing
+ 
+ import carla
+@@ -14,6 +16,7 @@
+ from lead.policy.transfuser.visualization.agent_prediction_visualizer import (
+     AgentPredictionVisualizer,
+ )
++from srunner.scenariomanager.carla_data_provider import CarlaDataProvider
+ 
+ matplotlib.use("Agg")  # non-GUI backend for headless servers
+ 
+@@ -62,11 +65,127 @@
+             The vehicle control to apply this step.
+         """
+         self.agent_prediction = self._build_agent_prediction(prediction, features)
+-        return carla.VehicleControl(
++        control = carla.VehicleControl(
+             steer=float(self.agent_prediction.steer),
+             throttle=float(self.agent_prediction.throttle),
+             brake=float(self.agent_prediction.brake),
+         )
++        self._gp_log_prediction(prediction, features, control)
++        return control
++
++    # ------------------------------------------------------------------
++    # Ghost-Pedestrian P3.5 hook. Env-gated and read-only: when GP_PRED_LOG is
++    # unset this is a single dictionary lookup per step and the agent behaves
++    # exactly as before. It records the model's auxiliary perception outputs,
++    # planning outputs and the final control on the SAME frame the policy saw.
++    # ------------------------------------------------------------------
++    @staticmethod
++    def _gp_float(value):
++        if value is None:
++            return None
++        try:
++            if isinstance(value, torch.Tensor):
++                return float(value.reshape(-1)[0].item())
++            return float(value)
++        except Exception:
++            return None
++
++    def _gp_log_prediction(self, prediction, features, control):
++        path = os.environ.get("GP_PRED_LOG")
++        if not path:
++            return
++        try:
++            if not getattr(self, "_gp_log_fh", None):
++                self._gp_log_fh = open(path, "a", buffering=1)
++
++            try:
++                snap = CarlaDataProvider.get_world().get_snapshot()
++                frame = int(snap.frame)
++                sim_t = round(float(snap.timestamp.elapsed_seconds), 4)
++            except Exception:
++                frame, sim_t = None, None
++
++            rec = {
++                "step": int(self.step),
++                "frame": frame,
++                "t": sim_t,
++            }
++            f = self._gp_float
++            rec["speed"] = f(features.get("speed"))
++            rec["target_speed_scalar"] = f(prediction.target_speed_scalar)
++            rec["target_speed_post"] = f(self.agent_prediction.target_speed)
++            rec["brake_threshold"] = f(
++                getattr(self.lead_config.evaluation.inference, "brake_threshold", None))
++
++            if prediction.target_speed_distribution is not None:
++                dist = torch.softmax(prediction.target_speed_distribution.float(), dim=-1)[0]
++                rec["target_speed_prob_bin0"] = f(dist[0])
++                rec["target_speed_argmax_bin"] = int(torch.argmax(dist).item())
++                if dist.numel() <= 24:
++                    rec["target_speed_distribution"] = [round(x, 4) for x in dist.tolist()]
++            for name in ("route", "future_waypoints"):
++                arr = getattr(prediction, name)
++                if arr is not None:
++                    a = arr[0].detach().cpu().float()
++                    flat = a.reshape(-1)
++                    rec[name + "_n"] = int(a.shape[0])
++                    rec[name + "_finite_frac"] = round(
++                        float(torch.isfinite(flat).float().mean().item()), 4)
++                    rec[name + "_y_mean"] = round(float(a[:, 1].mean().item()), 3)
++                    rec[name + "_first"] = [round(x, 2) for x in a[0].tolist()]
++
++            # Auxiliary perception: bounding boxes (class 1 = WALKER).
++            try:
++                bb = prediction.bounding_box
++                if bb is not None:
++                    boxes = bb.bounding_boxes_in_image_frame[0]  # (K, 9)
++                    conf = boxes[:, 8]
++                    keep = conf > 0.05
++                    b = boxes[keep]
++                    rec["n_boxes"] = int(b.shape[0])
++                    walkers = b[b[:, 7].astype(int) == 1]
++                    if walkers.shape[0]:
++                        top = walkers[walkers[:, 8].argsort()[::-1]][:3]
++                        rec["walker_boxes"] = [
++                            [round(float(v), 1) for v in row[[0, 1, 2, 3, 8]]]
++                            for row in top]
++                        rec["walker_score_max"] = round(float(top[0, 8]), 4)
++                    else:
++                        rec["walker_score_max"] = 0.0
++            except Exception as exc:
++                rec["box_error"] = str(exc)[:120]
++
++            # Auxiliary perception: BEV semantics (class 5 = WALKER) and
++            # perspective semantics (class 4 = PEDESTRIAN).
++            try:
++                if prediction.bev_semantic is not None:
++                    p = torch.softmax(prediction.bev_semantic[0].float(), dim=0)
++                    w = p[5]
++                    rec["bev_walker_max"] = round(float(w.max().item()), 4)
++                    rec["bev_walker_cells_gt50"] = int((w > 0.5).sum().item())
++            except Exception as exc:
++                rec["bev_error"] = str(exc)[:120]
++            try:
++                if prediction.semantic is not None:
++                    p = torch.softmax(prediction.semantic[0].float(), dim=0)
++                    ped = p[4]
++                    rec["sem_ped_max"] = round(float(ped.max().item()), 4)
++            except Exception as exc:
++                rec["sem_error"] = str(exc)[:120]
++
++            # Control decomposition: which tracker produced the brake.
++            for name in ("waypoints_brake", "route_steer", "target_speed_brake",
++                         "target_speed_throttle"):
++                rec[name] = f(getattr(self.agent_prediction, name, None))
++            rec["control"] = [round(float(control.steer), 4),
++                              round(float(control.throttle), 4),
++                              round(float(control.brake), 4)]
++
++            self._gp_log_fh.write(json.dumps(rec) + "\n")
++        except Exception as exc:
++            if not getattr(self, "_gp_log_warned", False):
++                self._gp_log_warned = True
++                LOG.warning("GP_PRED_LOG hook failed: %s", exc)
+ 
+     def _post_process_target_speed(
+         self,

@@ -77,10 +77,26 @@ class _GhostState:
         self.released = False
         self.release_time = None
         self.release_frame = None
+        # P0.5: captured inside ReleasePedestrian.update() at the release tick,
+        # NOT one tick later in RecordGhostMetrics.
         self.actual_trigger_distance_m = None
+        self.first_post_release_distance_m = None
+        self.release_speed_mps = None
+        self.release_ego_x = None
+        self.release_ego_y = None
+        self.release_walker_x = None
+        self.release_walker_y = None
+        self.walker_speed_mps = None
         self.visible_time = None
         self.oracle_mode = None
         self.oracle_active_logged = False
+        # P0.5: the frame/time the override was actually applied, which can be
+        # one tree tick after the planned start (OracleBrake runs before
+        # ReleasePedestrian in the parallel tree).
+        self.oracle_planned_start_time_s = None
+        self.oracle_first_active_time_s = None
+        self.oracle_first_active_frame = None
+        self.oracle_currently_active = False
         self.brake_onset = None
         self.min_dist = float("inf")
         self.min_dist_time = None
@@ -133,8 +149,15 @@ class _GhostState:
         if post and self.release_time is not None:
             t0 = self.release_time
             window = [r for r in post if r["t"] - t0 <= 3.5]
-            m["ego_speed_at_release_mps"] = post[0]["ego_speed"]
-            m["available_dist_at_release_m"] = post[0]["dist_ego_crossing"]
+            # P0.5: use the state captured at the release tick itself; fall back
+            # to the first post-release sample only for legacy traces.
+            m["ego_speed_at_release_mps"] = (
+                self.release_speed_mps if self.release_speed_mps is not None
+                else post[0]["ego_speed"])
+            m["available_dist_at_release_m"] = (
+                self.actual_trigger_distance_m
+                if self.actual_trigger_distance_m is not None
+                else post[0]["dist_ego_crossing"])
 
             # When did the pedestrian first become geometrically visible?
             vis = next((r for r in post if r.get("occluded") is False), None)
@@ -188,11 +211,30 @@ class _GhostState:
             "status": "final",
             "trigger_distance_m": self.trigger_distance,
             "actual_trigger_distance_m": self.actual_trigger_distance_m,
+            "trigger_error_m": (round(self.actual_trigger_distance_m - self.trigger_distance, 3)
+                                if self.actual_trigger_distance_m is not None
+                                and self.trigger_distance is not None else None),
+            "first_post_release_distance_m": self.first_post_release_distance_m,
+            "release_speed_mps": self.release_speed_mps,
             "release_frame": self.release_frame,
+            "release_ego_x": self.release_ego_x,
+            "release_ego_y": self.release_ego_y,
+            "release_walker_x": self.release_walker_x,
+            "release_walker_y": self.release_walker_y,
+            "walker_speed_mps": self.walker_speed_mps,
             "visible_time_s": (round(self.visible_time - self.release_time, 3)
                                if self.visible_time is not None
                                and self.release_time is not None else None),
             "oracle_mode": self.oracle_mode,
+            "oracle_planned_start_time_s": (
+                round(self.oracle_planned_start_time_s - self.release_time, 3)
+                if self.oracle_planned_start_time_s is not None
+                and self.release_time is not None else None),
+            "oracle_first_active_time_s": (
+                round(self.oracle_first_active_time_s - self.release_time, 3)
+                if self.oracle_first_active_time_s is not None
+                and self.release_time is not None else None),
+            "oracle_first_active_frame": self.oracle_first_active_frame,
             "num_records": len(self.records),
             "collisions_all": self.collisions,
             "collision_pedestrian": len(ped_hits) > 0,
@@ -250,22 +292,53 @@ class DashWalker(AtomicBehavior):
 
 
 class ReleasePedestrian(AtomicBehavior):
-    """Marks the moment the pedestrian starts crossing (ped becomes visible)."""
+    """Marks release and captures the state AT that tick (P0.5 fix).
 
-    def __init__(self, state, name="ReleasePedestrian"):
+    This behavior runs as the second child of the scenario sequence, AFTER the
+    parallel root's OracleBrake and RecordGhostMetrics children have ticked.
+    Sampling the ego-to-crossing distance in RecordGhostMetrics therefore
+    yields the next tick's distance (~0.4 m later at 8 m/s). Capturing it here,
+    in the same call that sets `released`, removes that one-tick offset.
+    """
+
+    def __init__(self, state, ego, walker, crossing_loc, walker_speed,
+                 name="ReleasePedestrian"):
         super(ReleasePedestrian, self).__init__(name)
         self.state = state
+        self.ego = ego
+        self.walker = walker
+        self.crossing_loc = crossing_loc
+        self.walker_speed = float(walker_speed)
 
     def update(self):
         if not self.state.released:
             self.state.released = True
             self.state.release_time = GameTime.get_time()
+            self.state.walker_speed_mps = self.walker_speed
+            eloc = CarlaDataProvider.get_location(self.ego)
+            wloc = (CarlaDataProvider.get_location(self.walker)
+                    if self.walker else None)
+            self.state.actual_trigger_distance_m = round(
+                _flat_dist(eloc, self.crossing_loc), 3)
+            self.state.release_speed_mps = round(
+                float(CarlaDataProvider.get_velocity(self.ego)), 3)
+            self.state.release_ego_x = round(eloc.x, 3)
+            self.state.release_ego_y = round(eloc.y, 3)
+            if wloc is not None:
+                self.state.release_walker_x = round(wloc.x, 3)
+                self.state.release_walker_y = round(wloc.y, 3)
             try:
-                self.state.release_frame = CarlaDataProvider.get_world().get_snapshot().frame
+                self.state.release_frame = (
+                    CarlaDataProvider.get_world().get_snapshot().frame)
             except Exception:
                 self.state.release_frame = None
-            _log("PEDESTRIAN RELEASED at t={:.3f} frame={}".format(
-                self.state.release_time, self.state.release_frame))
+            _log("PEDESTRIAN RELEASED at t={:.3f} frame={} dist={:.3f} speed={:.3f} "
+                 "walker=({},{}) speed_w={:.2f}".format(
+                     self.state.release_time, self.state.release_frame,
+                     self.state.actual_trigger_distance_m,
+                     self.state.release_speed_mps,
+                     self.state.release_walker_x, self.state.release_walker_y,
+                     self.walker_speed))
         return py_trees.common.Status.SUCCESS
 
 
@@ -336,8 +409,11 @@ class RecordGhostMetrics(AtomicBehavior):
         dist = _flat_dist(eloc, wloc) if wloc else None
         cross_dist = _flat_dist(eloc, self.crossing_loc)
 
-        if self.state.released and self.state.actual_trigger_distance_m is None:
-            self.state.actual_trigger_distance_m = round(cross_dist, 3)
+        # P0.5: this is the FIRST POST-RELEASE sample (one tick after release),
+        # no longer mistaken for the distance at the release instant.
+        if (self.state.released
+                and self.state.first_post_release_distance_m is None):
+            self.state.first_post_release_distance_m = round(cross_dist, 3)
 
         if wloc is not None and dist < self.state.min_dist:
             self.state.min_dist = dist
@@ -379,6 +455,7 @@ class RecordGhostMetrics(AtomicBehavior):
             "dist_ego_walker": None if dist is None else round(dist, 3),
             "dist_ego_crossing": round(cross_dist, 3),
             "released": self.state.released,
+            "oracle_active": self.state.oracle_currently_active,
             # Always compute occlusion (also after release) so we can measure
             # when the pedestrian becomes visible relative to braking.
             "occluded": occ,
@@ -426,17 +503,29 @@ class OracleBrake(AtomicBehavior):
             return py_trees.common.Status.RUNNING
         now = GameTime.get_time()
         if now < start:
+            self.state.oracle_currently_active = False
             return py_trees.common.Status.RUNNING
         try:
             ctrl = self.ego.get_control()
             ctrl.throttle = 0.0
             ctrl.brake = self.brake_cmd
             self.ego.apply_control(ctrl)
+            self.state.oracle_currently_active = True
             if not self.state.oracle_active_logged:
                 self.state.oracle_active_logged = True
-                _log("ORACLE BRAKE active at t={:.3f} mode={} brake={:.2f}".format(
-                    now, self.mode, self.brake_cmd))
+                self.state.oracle_planned_start_time_s = start
+                self.state.oracle_first_active_time_s = now
+                try:
+                    self.state.oracle_first_active_frame = (
+                        CarlaDataProvider.get_world().get_snapshot().frame)
+                except Exception:
+                    self.state.oracle_first_active_frame = None
+                _log("ORACLE BRAKE active at t={:.3f} mode={} brake={:.2f} "
+                     "planned_t={:.3f} lag={:.3f}s frame={}".format(
+                         now, self.mode, self.brake_cmd, start, now - start,
+                         self.state.oracle_first_active_frame))
         except Exception as exc:
+            self.state.oracle_currently_active = False
             _log("ORACLE BRAKE apply failed: {}".format(exc))
         return py_trees.common.Status.RUNNING
 
@@ -640,7 +729,9 @@ class GhostPedestrian(BasicScenario):
 
         end_dist = self.crossing_ahead + self.end_after
         if self.walker_enabled:
-            seq.add_child(ReleasePedestrian(self.state))
+            seq.add_child(ReleasePedestrian(
+                self.state, self.ego_vehicles[0], self._walker,
+                self._crossing_loc, self.walker_speed))
             move = py_trees.composites.Parallel(
                 name="CrossAndPass", policy=py_trees.common.ParallelPolicy.SUCCESS_ON_ALL,
             )

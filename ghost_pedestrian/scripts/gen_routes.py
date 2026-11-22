@@ -108,4 +108,48 @@ for tag, d, mode, delay, brake in ORACLE:
              output_dir=OUTROOT + "/gp_" + tag)
     write_route("gp_{}.xml".format(tag), [scenario_block(name, p)])
 
+# ---------------------------------------------------------------------------
+# v3 stages. Every route has its own output_dir so parallel workers never
+# write to the same run directory.
+# ---------------------------------------------------------------------------
+
+# P4: 4 nominal distances x 5 independent repeats. Experiment unit is the
+# measured release state s_release, not the nominal distance.
+for d in (24, 24.25, 24.5, 25):
+    tag = str(d).replace(".", "p")
+    for r in range(1, 6):
+        run = "p4_{}m_r{}".format(tag, r)
+        p = dict(BASE, walker_enabled="1", trigger_distance=str(d),
+                 output_dir=OUTROOT + "/" + run)
+        write_route("{}.xml".format(run), [scenario_block("GP_" + run, p)])
+
+# P3.5: paired LEAD vs Oracle runs with the inference hook enabled.
+for run, mode in (("p35_lead_24m", ""), ("p35_or_24m", "visible")):
+    p = dict(BASE, walker_enabled="1", trigger_distance="24",
+             output_dir=OUTROOT + "/" + run)
+    if mode:
+        p.update(oracle_mode=mode, oracle_brake="1.0", oracle_delay="0.0")
+    write_route("{}.xml".format(run), [scenario_block("GP_" + run, p)])
+
+# P5: one new variable (walker crossing speed) x trigger distance.
+for speed in (1.0, 1.5, 2.0):
+    st = str(speed).replace(".", "p")
+    for d in (20, 22, 24, 26):
+        dt = str(d).replace(".", "p")
+        run = "p5_s{}_d{}m".format(st, dt)
+        p = dict(BASE, walker_enabled="1", walker_speed=str(speed),
+                 trigger_distance=str(d), output_dir=OUTROOT + "/" + run)
+        write_route("{}.xml".format(run), [scenario_block("GP_" + run, p)])
+
+# P6: candidate pool for the active boundary search. Fine distance grid at
+# three walker speeds; the search script selects a small subset.
+for speed in (1.0, 1.5, 2.0):
+    st = str(speed).replace(".", "p")
+    for d in (20.5, 21.5, 22.5, 23.5, 24.25, 25.5, 26.5):
+        dt = str(d).replace(".", "p")
+        run = "p6_s{}_d{}m".format(st, dt)
+        p = dict(BASE, walker_enabled="1", walker_speed=str(speed),
+                 trigger_distance=str(d), output_dir=OUTROOT + "/" + run)
+        write_route("{}.xml".format(run), [scenario_block("GP_" + run, p)])
+
 print("done")
