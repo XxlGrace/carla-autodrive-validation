@@ -4,7 +4,7 @@
 Geometry (Town01, straight southbound segment at x=396.3):
   ego start y=300 -> trigger point y=260 -> crossing y=208 (crossing_ahead=52m)
   occluder: right shoulder, 5m before crossing; walker dashes east->west.
-Sweep variable: ego-to-crossing trigger distance (25 / 15 / 9 m).
+Sweep variable: ego-to-crossing trigger distance (continuous grid).
 """
 import os
 
@@ -69,11 +69,23 @@ write_route("baseline.xml", [])
 p = dict(BASE, walker_enabled="0", output_dir=OUTROOT + "/occluder_only")
 write_route("occluder_only.xml", [scenario_block("OccluderOnly", p)])
 
-# 3) Ghost pedestrian at trigger distances 25 / 15 / 9 m
-for d in (25, 15, 9):
-    name = "GP_{}m".format(d)
+# 3) Ghost pedestrian: continuous fine scan of trigger distance.
+#    Coarse anchors 25/15/9 + 2 m grid between 15 and 25 to localise the
+#    safe->collision transition. Add values here to extend the sweep.
+DISTANCES = (25, 24.5, 24.25, 24, 23, 22, 20, 18, 16, 15, 9)
+for d in DISTANCES:
+    # "24.5" -> name "GP_24p5m", file "gp_24p5m.xml", run dir "gp_24p5m"
+    tag = str(d).replace(".", "p")
+    name = "GP_{}m".format(tag)
     p = dict(BASE, walker_enabled="1", trigger_distance=str(d),
-             output_dir=OUTROOT + "/gp_{}m".format(d))
+             output_dir=OUTROOT + "/gp_{}m".format(tag))
+    write_route("{}.xml".format(name.lower()), [scenario_block(name, p)])
+
+# Repeatability: independent second runs at the two coarse anchors.
+for d, suffix in ((24, "24m_r2"), (25, "25m_r2")):
+    name = "GP_{}".format(suffix)
+    p = dict(BASE, walker_enabled="1", trigger_distance=str(d),
+             output_dir=OUTROOT + "/gp_{}".format(suffix))
     write_route("{}.xml".format(name.lower()), [scenario_block(name, p)])
 
 print("done")
