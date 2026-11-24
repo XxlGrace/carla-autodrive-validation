@@ -39,7 +39,7 @@ bash scripts/stop_carla.sh
 
 ✅ 端到端基线 LEAD 预训练模型（TransFuser / resnet34_v1.5.0）已在本机完成闭环评估环境搭建与路线验证；启动前置条件、性能修复（numba 线程数与 cgroup 配额对齐）及踩坑记录见 [`docs/LEAD_EVAL.md`](docs/LEAD_EVAL.md)。
 
-✅ 鬼探头 v4 场景重建（2026-11-24）：`Town05_Opt` 城市路段、路侧停车遮挡、物理行人、LEAD 前视相机视角录制；几何自检、距离扫描、边界重复、Oracle 对照与 LEAD 感知对齐见 [`docs/GHOST_PEDESTRIAN_V4.md`](docs/GHOST_PEDESTRIAN_V4.md)，代码在 [`ghost_pedestrian_v4/`](ghost_pedestrian_v4/)。
+✅ 鬼探头 v4 场景重建（2026-11-24）：`Town05_Opt` 城市路段、路侧停车遮挡、物理行人、LEAD 前视相机视角录制；几何自检、距离扫描、边界重复、Oracle 对照与 LEAD 感知对齐见 [`docs/GHOST_PEDESTRIAN_V4.md`](docs/GHOST_PEDESTRIAN_V4.md)，代码在 [`ghost_pedestrian_v4/`](ghost_pedestrian_v4/)。旧的 v0–v3 场景与产物已移除（只存于 git 历史）。
 
 🎬 v4 演示视频：[碰撞（20 m，被遮挡后撞上）](ghost_pedestrian_v4/demos/demo_collision.mp4) · [安全（40 m）](ghost_pedestrian_v4/demos/demo_safe.mp4) · [Oracle 首次可见即刹](ghost_pedestrian_v4/demos/demo_oracle.mp4) · [仅遮挡车基线](ghost_pedestrian_v4/demos/demo_occluder_only.mp4) · [四格对照](ghost_pedestrian_v4/demos/demo_comparison.mp4)
 

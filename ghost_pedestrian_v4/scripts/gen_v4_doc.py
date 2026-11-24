@@ -59,6 +59,9 @@ A("v4 不使用 v3 的数值：道路、遮挡物、行人运动、相机位置�
   "改变，v3 的临界距离不能迁移到 v4。v4 只保留实验框架（LEAD 闭环、Oracle "
   "对照、逐帧遥测、危险参数扫描）。")
 A("")
+A("> v0–v3 的旧场景与产物已从仓库删除（道路、遮挡物、录制方式都被判定不合理），"
+  "只在 git 历史里可查。本文件是当前唯一有效的鬼探头结果。")
+A("")
 
 # ---------------------------------------------------------------- conclusion
 coll = [r for r in sweep if r["collision"] == "True"]
@@ -361,6 +364,9 @@ A("# 一次跑完（几何自检 → 实验 → 演示 → 分析 → 文档 →
 A("bash /root/autodl-tmp/carla-autodrive-validation/ghost_pedestrian_v4/scripts/run_all_v4.sh")
 A("")
 A("# 或者分步：")
+A("# LEAD 侧感知钩子（pred 运行需要；本机已应用，重装 LEAD 后重打）")
+A("patch -p0 -d /root/autodl-tmp/third_party/lead/src/lead/evaluation/agents/transfuser \\")
+A("      < ghost_pedestrian_v4/patches/gp_pred_hook.patch")
 A("conda activate /root/autodl-tmp/envs/lead")
 A("bash /root/autodl-tmp/v4_set_map.sh Town05_Opt          # 启动前定图，评估中不 load_world")
 A("python3 ghost_pedestrian_v4/scripts/gen_routes_v4.py")

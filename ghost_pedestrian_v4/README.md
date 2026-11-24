@@ -6,6 +6,9 @@ v4 重建了场景本身，保留 v3 的实验框架（LEAD 闭环、Oracle 对�
 
 结果与分析见 [`../docs/GHOST_PEDESTRIAN_V4.md`](../docs/GHOST_PEDESTRIAN_V4.md)。
 
+> 仓库里不再保留 v0–v3 的鬼探头场景与产物（道路、遮挡物、录制方式都被判定为不合理），
+> 它们只存在于 git 历史；本目录与 `docs/GHOST_PEDESTRIAN_V4.md` 是当前唯一有效的版本。
+
 ## 场景
 
 `Town05_Opt` 第 19 号路 −1 车道（城市街道，右侧依次是 Parking / Shoulder /
@@ -24,7 +27,6 @@ Sidewalk）。由地图推导，不是硬编码偏移：
 8–40 m 全程不可见。
 
 ## 记录
-
 - 每个仿真 tick 一帧（20 Hz），三路：**LEAD 前视相机本体** / 俯视 / 追尾。
 - 帧按 `image.frame` 落盘并写 `frames_manifest.jsonl`；编码前按帧号重排、补帧，
   按 20 fps 编码，时间轴与仿真一致。
@@ -48,6 +50,10 @@ bash /root/autodl-tmp/v4_set_map.sh Town05_Opt        # 启动前定图，评估
 python3 scripts/gen_routes_v4.py
 bash scripts/install_v4.sh
 
+# LEAD 侧感知钩子（pred 运行需要；本机已应用，重装 LEAD 后要重打）
+patch -p0 -d /root/autodl-tmp/third_party/lead/src/lead/evaluation/agents/transfuser \
+      < patches/gp_pred_hook.patch
+
 # 几何自检（只连 CARLA，不跑模型）
 bash /root/autodl-tmp/v4_start_carla.sh 2000 Low
 python3 scripts/verify_geometry_v4.py > results/geometry_check.txt
@@ -66,6 +72,7 @@ summary 之后**退出时 abort；分析以 `summary.status == "final"` 为成�
 
 ```
 scenarios/ghost_pedestrian_v4.py   scenario runner 场景
+patches/gp_pred_hook.patch         LEAD 推理钩子（GP_PRED_LOG），pred 运行必需
 scripts/gen_routes_v4.py           生成路线 XML
 scripts/install_v4.sh              装进 LEAD 的 scenario_runner
 scripts/run_v4.sh                  批量执行（逐条重启 CARLA）

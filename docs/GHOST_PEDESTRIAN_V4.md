@@ -2,6 +2,8 @@
 
 v4 不使用 v3 的数值：道路、遮挡物、行人运动、相机位置、遮挡判定方式全部改变，v3 的临界距离不能迁移到 v4。v4 只保留实验框架（LEAD 闭环、Oracle 对照、逐帧遥测、危险参数扫描）。
 
+> v0–v3 的旧场景与产物已从仓库删除（道路、遮挡物、录制方式都被判定不合理），只在 git 历史里可查。本文件是当前唯一有效的鬼探头结果。
+
 ## 结论摘要
 
 - 单次距离扫描：**20、26 m 碰撞**，其余 8 个距离点安全。
@@ -237,6 +239,9 @@ E1 被遮挡 → E2 释放 → E3 首次可见 → E4 自车持续制动 → E5 
 bash /root/autodl-tmp/carla-autodrive-validation/ghost_pedestrian_v4/scripts/run_all_v4.sh
 
 # 或者分步：
+# LEAD 侧感知钩子（pred 运行需要；本机已应用，重装 LEAD 后重打）
+patch -p0 -d /root/autodl-tmp/third_party/lead/src/lead/evaluation/agents/transfuser \
+      < ghost_pedestrian_v4/patches/gp_pred_hook.patch
 conda activate /root/autodl-tmp/envs/lead
 bash /root/autodl-tmp/v4_set_map.sh Town05_Opt          # 启动前定图，评估中不 load_world
 python3 ghost_pedestrian_v4/scripts/gen_routes_v4.py
