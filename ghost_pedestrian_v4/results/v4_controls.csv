@@ -1,0 +1,8 @@
+run,trigger_m,actual_m,speed_mps,collision,min_dist_m,occ_before,in_fov_before,visible_s,lane_entry_s,ego_cross_s,brake_s,oracle,walker_mode,town,records
+v4_occluder_only,,,,False,,,,,,,,,unknown,Town05_Opt,387
+v4_no_occluder,20.0,19.846,7.48,True,1.102,0.0,1.0,0.05,2.2,2.35,2.65,,physics,Town05_Opt,260
+v4_d20m,20.0,19.847,7.51,True,1.199,0.888,1.0,1.6,2.2,2.35,2.8,,physics,Town05_Opt,245
+v4_d20m_or_immediate,20.0,19.833,7.72,False,16.416,0.888,1.0,1.7,2.2,,0.1,immediate,physics,Town05_Opt,241
+v4_d20m_or_visible,20.0,19.836,7.54,False,3.766,0.888,1.0,1.6,2.2,,1.7,visible,physics,Town05_Opt,241
+v4_s1p0_d20m,20.0,19.796,7.36,False,2.052,0.888,1.0,1.95,3.15,2.3,2.75,,physics,Town05_Opt,297
+v4_s2p0_d20m,20.0,19.897,7.54,False,3.69,0.888,1.0,1.3,1.75,4.8,1.7,,physics,Town05_Opt,229

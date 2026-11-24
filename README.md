@@ -39,6 +39,8 @@ bash scripts/stop_carla.sh
 
 ✅ 端到端基线 LEAD 预训练模型（TransFuser / resnet34_v1.5.0）已在本机完成闭环评估环境搭建与路线验证；启动前置条件、性能修复（numba 线程数与 cgroup 配额对齐）及踩坑记录见 [`docs/LEAD_EVAL.md`](docs/LEAD_EVAL.md)。
 
+✅ 鬼探头 v4 场景重建（2026-11-24）：`Town05_Opt` 城市路段、路侧停车遮挡、物理行人、LEAD 前视相机视角录制；几何自检、距离扫描、边界重复、Oracle 对照与 LEAD 感知对齐见 [`docs/GHOST_PEDESTRIAN_V4.md`](docs/GHOST_PEDESTRIAN_V4.md)，代码在 [`ghost_pedestrian_v4/`](ghost_pedestrian_v4/)。
+
 ## 接口边界
 
 - **Observation**：CARLA RGB 相机（前视），`sensor_tick=0.0`，每 tick 同帧落盘。

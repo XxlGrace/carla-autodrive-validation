@@ -1,0 +1,5 @@
+run,chase,chase_gaps,chase_cover,lead,lead_gaps,lead_cover,top,top_gaps,top_cover
+v4_demo_collision,180,0,1.0,185,0,1.0,185,0,1.0
+v4_demo_occluder_only,394,0,1.0,396,0,1.0,396,0,1.0
+v4_demo_oracle,247,0,1.0,252,0,1.0,252,0,1.0
+v4_demo_safe,193,0,1.0,198,0,1.0,198,0,1.0

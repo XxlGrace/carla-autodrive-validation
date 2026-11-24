@@ -1,0 +1,245 @@
+{
+  "v4_boundary20_r1": {
+    "E1_occ_before": 0.888,
+    "E2_release_s": 6.15,
+    "E3_visible_s": 1.55,
+    "E4_brake_s": null,
+    "E5_outcome": "collision",
+    "min_dist_m": 1.091,
+    "walker_mode": "unknown"
+  },
+  "v4_boundary20_r2": {
+    "E1_occ_before": 0.888,
+    "E2_release_s": 6.15,
+    "E3_visible_s": 1.55,
+    "E4_brake_s": 1.8,
+    "E5_outcome": "safe",
+    "min_dist_m": 4.232,
+    "walker_mode": "physics"
+  },
+  "v4_boundary20_r3": {
+    "E1_occ_before": 0.888,
+    "E2_release_s": 6.15,
+    "E3_visible_s": 1.55,
+    "E4_brake_s": null,
+    "E5_outcome": "collision",
+    "min_dist_m": 1.127,
+    "walker_mode": "unknown"
+  },
+  "v4_boundary24_r1": {
+    "E1_occ_before": 0.877,
+    "E2_release_s": 5.6,
+    "E3_visible_s": 1.6,
+    "E4_brake_s": 2.45,
+    "E5_outcome": "safe",
+    "min_dist_m": 2.608,
+    "walker_mode": "physics"
+  },
+  "v4_boundary24_r2": {
+    "E1_occ_before": 0.877,
+    "E2_release_s": 5.6,
+    "E3_visible_s": 1.6,
+    "E4_brake_s": 2.3,
+    "E5_outcome": "safe",
+    "min_dist_m": 3.33,
+    "walker_mode": "physics"
+  },
+  "v4_boundary24_r3": {
+    "E1_occ_before": 0.878,
+    "E2_release_s": 5.65,
+    "E3_visible_s": 1.6,
+    "E4_brake_s": 2.25,
+    "E5_outcome": "safe",
+    "min_dist_m": 4.013,
+    "walker_mode": "physics"
+  },
+  "v4_boundary26_r1": {
+    "E1_occ_before": 0.871,
+    "E2_release_s": 5.35,
+    "E3_visible_s": 1.65,
+    "E4_brake_s": 1.15,
+    "E5_outcome": "collision",
+    "min_dist_m": 2.199,
+    "walker_mode": "unknown"
+  },
+  "v4_boundary26_r2": {
+    "E1_occ_before": 0.872,
+    "E2_release_s": 5.4,
+    "E3_visible_s": 1.65,
+    "E4_brake_s": 2.8,
+    "E5_outcome": "collision",
+    "min_dist_m": 2.381,
+    "walker_mode": "unknown"
+  },
+  "v4_boundary26_r3": {
+    "E1_occ_before": 0.872,
+    "E2_release_s": 5.4,
+    "E3_visible_s": 1.65,
+    "E4_brake_s": 3.0,
+    "E5_outcome": "safe",
+    "min_dist_m": 2.498,
+    "walker_mode": "physics"
+  },
+  "v4_d12m": {
+    "E1_occ_before": 0.905,
+    "E2_release_s": 7.2,
+    "E3_visible_s": null,
+    "E4_brake_s": 1.65,
+    "E5_outcome": "safe",
+    "min_dist_m": 2.304,
+    "walker_mode": "physics"
+  },
+  "v4_d16m": {
+    "E1_occ_before": 0.898,
+    "E2_release_s": 6.75,
+    "E3_visible_s": 1.35,
+    "E4_brake_s": 2.1,
+    "E5_outcome": "safe",
+    "min_dist_m": 1.654,
+    "walker_mode": "physics"
+  },
+  "v4_d20m": {
+    "E1_occ_before": 0.888,
+    "E2_release_s": 6.15,
+    "E3_visible_s": 1.55,
+    "E4_brake_s": 2.75,
+    "E5_outcome": "collision",
+    "min_dist_m": 1.199,
+    "walker_mode": "physics"
+  },
+  "v4_d20m_or_immediate": {
+    "E1_occ_before": 0.888,
+    "E2_release_s": 6.15,
+    "E3_visible_s": 1.65,
+    "E4_brake_s": 0.05,
+    "E5_outcome": "safe",
+    "min_dist_m": 16.416,
+    "walker_mode": "physics"
+  },
+  "v4_d20m_or_visible": {
+    "E1_occ_before": 0.888,
+    "E2_release_s": 6.15,
+    "E3_visible_s": 1.55,
+    "E4_brake_s": 1.65,
+    "E5_outcome": "safe",
+    "min_dist_m": 3.766,
+    "walker_mode": "physics"
+  },
+  "v4_d24m": {
+    "E1_occ_before": 0.877,
+    "E2_release_s": 5.6,
+    "E3_visible_s": 1.6,
+    "E4_brake_s": 2.4,
+    "E5_outcome": "safe",
+    "min_dist_m": 3.72,
+    "walker_mode": "physics"
+  },
+  "v4_d26m": {
+    "E1_occ_before": 0.871,
+    "E2_release_s": 5.35,
+    "E3_visible_s": 1.65,
+    "E4_brake_s": 1.15,
+    "E5_outcome": "collision",
+    "min_dist_m": 1.066,
+    "walker_mode": "physics"
+  },
+  "v4_d28m": {
+    "E1_occ_before": 0.863,
+    "E2_release_s": 5.05,
+    "E3_visible_s": 1.65,
+    "E4_brake_s": 1.2,
+    "E5_outcome": "safe",
+    "min_dist_m": 2.638,
+    "walker_mode": "unknown"
+  },
+  "v4_d30m": {
+    "E1_occ_before": 0.856,
+    "E2_release_s": 4.8,
+    "E3_visible_s": 1.65,
+    "E4_brake_s": 1.25,
+    "E5_outcome": "safe",
+    "min_dist_m": 7.246,
+    "walker_mode": "physics"
+  },
+  "v4_d34m": {
+    "E1_occ_before": 0.839,
+    "E2_release_s": 4.3,
+    "E3_visible_s": 1.7,
+    "E4_brake_s": 1.65,
+    "E5_outcome": "safe",
+    "min_dist_m": 6.754,
+    "walker_mode": "physics"
+  },
+  "v4_d40m": {
+    "E1_occ_before": 0.799,
+    "E2_release_s": 3.45,
+    "E3_visible_s": 1.7,
+    "E4_brake_s": 2.4,
+    "E5_outcome": "safe",
+    "min_dist_m": 6.813,
+    "walker_mode": "physics"
+  },
+  "v4_d8m": {
+    "E1_occ_before": 0.911,
+    "E2_release_s": 7.75,
+    "E3_visible_s": null,
+    "E4_brake_s": 1.15,
+    "E5_outcome": "safe",
+    "min_dist_m": 3.103,
+    "walker_mode": "physics"
+  },
+  "v4_demo_collision": {
+    "E1_occ_before": 0.888,
+    "E2_release_s": 6.15,
+    "E3_visible_s": 1.55,
+    "E4_brake_s": null,
+    "E5_outcome": "collision",
+    "min_dist_m": 1.082,
+    "walker_mode": "unknown"
+  },
+  "v4_demo_oracle": {
+    "E1_occ_before": 0.888,
+    "E2_release_s": 6.15,
+    "E3_visible_s": 1.55,
+    "E4_brake_s": 1.65,
+    "E5_outcome": "safe",
+    "min_dist_m": 4.007,
+    "walker_mode": "physics"
+  },
+  "v4_demo_safe": {
+    "E1_occ_before": 0.799,
+    "E2_release_s": 3.45,
+    "E3_visible_s": 1.7,
+    "E4_brake_s": 2.4,
+    "E5_outcome": "safe",
+    "min_dist_m": 12.013,
+    "walker_mode": "physics"
+  },
+  "v4_no_occluder": {
+    "E1_occ_before": 0.0,
+    "E2_release_s": 6.6,
+    "E3_visible_s": 0.0,
+    "E4_brake_s": 2.6,
+    "E5_outcome": "collision",
+    "min_dist_m": 1.102,
+    "walker_mode": "physics"
+  },
+  "v4_s1p0_d20m": {
+    "E1_occ_before": 0.888,
+    "E2_release_s": 6.15,
+    "E3_visible_s": 1.9,
+    "E4_brake_s": 2.7,
+    "E5_outcome": "safe",
+    "min_dist_m": 2.052,
+    "walker_mode": "physics"
+  },
+  "v4_s2p0_d20m": {
+    "E1_occ_before": 0.888,
+    "E2_release_s": 6.15,
+    "E3_visible_s": 1.25,
+    "E4_brake_s": 1.65,
+    "E5_outcome": "safe",
+    "min_dist_m": 3.69,
+    "walker_mode": "physics"
+  }
+}

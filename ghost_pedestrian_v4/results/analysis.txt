@@ -1,0 +1,119 @@
+
+=== DISTANCE SWEEP (Town05_Opt, walker 1.5 m/s) ===
+  run                    trigger_m actual_m  collision min_dist_m occ_before visible_s lane_entry_s brake_s  
+  v4_d8m                 8.0       7.724     False     3.103     0.911     None      2.2       1.2      
+  v4_d12m                12.0      11.808    False     2.304     0.905     None      2.2       1.7      
+  v4_d16m                16.0      15.894    False     1.654     0.898     1.4       2.2       2.15     
+  v4_d20m                20.0      19.847    True      1.199     0.888     1.6       2.2       2.8      
+  v4_d24m                24.0      23.855    False     3.72      0.877     1.65      2.2       2.45     
+  v4_d26m                26.0      25.756    True      1.066     0.871     1.7       2.2       1.2      
+  v4_d28m                28.0      27.993    False     2.638     0.863     1.7       2.2       1.25     
+  v4_d30m                30.0      29.827    False     7.246     0.856     1.7       2.2       1.3      
+  v4_d34m                34.0      33.653    False     6.754     0.839     1.75      2.2       1.7      
+  v4_d40m                40.0      39.68     False     6.813     0.799     1.75      2.2       2.45     
+  collision: [20.0, 26.0]  safe: [8.0, 12.0, 16.0, 24.0, 28.0, 30.0, 34.0, 40.0]
+
+=== CONTROLS / ORACLE / WALKER SPEED ===
+  run                    trigger_m collision min_dist_m occ_before visible_s brake_s   oracle   
+  v4_occluder_only       None      False     None      None      None      None      None     
+  v4_no_occluder         20.0      True      1.102     0.0       0.05      2.65      None     
+  v4_d20m                20.0      True      1.199     0.888     1.6       2.8       None     
+  v4_d20m_or_immediate   20.0      False     16.416    0.888     1.7       0.1       immediate
+  v4_d20m_or_visible     20.0      False     3.766     0.888     1.6       1.7       visible  
+  v4_s1p0_d20m           20.0      False     2.052     0.888     1.95      2.75      None     
+  v4_s2p0_d20m           20.0      False     3.69      0.888     1.3       1.7       None     
+
+=== BOUNDARY REPEATS ===
+  run                    trigger_m runs      collisions collision_rate min_dist_mean min_dist_min min_dist_max
+  trigger 20.0m          20.0      3         2         0.667     2.15      1.091     4.232    
+  trigger 24.0m          24.0      3         0         0.0       3.317     2.608     4.013    
+  trigger 26.0m          26.0      3         2         0.667     2.359     2.199     2.498    
+
+=== EVENT TIMELINE E1-E5 ===
+  run                    E1_occ_before E3_visible_s E4_brake_s E5_outcome min_dist_m
+  v4_boundary20_r1       0.888     1.55      None      collision 1.091    
+  v4_boundary20_r2       0.888     1.55      1.8       safe      4.232    
+  v4_boundary20_r3       0.888     1.55      None      collision 1.127    
+  v4_boundary24_r1       0.877     1.6       2.45      safe      2.608    
+  v4_boundary24_r2       0.877     1.6       2.3       safe      3.33     
+  v4_boundary24_r3       0.878     1.6       2.25      safe      4.013    
+  v4_boundary26_r1       0.871     1.65      1.15      collision 2.199    
+  v4_boundary26_r2       0.872     1.65      2.8       collision 2.381    
+  v4_boundary26_r3       0.872     1.65      3.0       safe      2.498    
+  v4_d12m                0.905     None      1.65      safe      2.304    
+  v4_d16m                0.898     1.35      2.1       safe      1.654    
+  v4_d20m                0.888     1.55      2.75      collision 1.199    
+  v4_d20m_or_immediate   0.888     1.65      0.05      safe      16.416   
+  v4_d20m_or_visible     0.888     1.55      1.65      safe      3.766    
+  v4_d24m                0.877     1.6       2.4       safe      3.72     
+  v4_d26m                0.871     1.65      1.15      collision 1.066    
+  v4_d28m                0.863     1.65      1.2       safe      2.638    
+  v4_d30m                0.856     1.65      1.25      safe      7.246    
+  v4_d34m                0.839     1.7       1.65      safe      6.754    
+  v4_d40m                0.799     1.7       2.4       safe      6.813    
+
+=== LEAD AUXILIARY PERCEPTION vs OCCLUSION ===
+  run                    lead_walker_max_before lead_walker_max_after lead_bev_max_before lead_bev_max_after
+  v4_boundary20_r1       0.0       0.056     0.001     0.013    
+  v4_boundary20_r2       0.0       0.437     0.001     0.666    
+  v4_boundary20_r3       0.0       0.083     0.001     0.015    
+  v4_boundary24_r1       0.0       0.269     0.001     0.186    
+  v4_boundary24_r2       0.0       0.236     0.001     0.165    
+  v4_boundary24_r3       0.0       0.429     0.002     0.462    
+  v4_boundary26_r1       0.0       0.059     0.001     0.009    
+  v4_boundary26_r2       0.0       0.069     0.006     0.01     
+  v4_boundary26_r3       0.0       0.269     0.003     0.091    
+  v4_d12m                0.053     0.0       0.002     0.021    
+  v4_d16m                0.056     0.052     0.008     0.007    
+  v4_d20m                0.0       0.068     0.001     0.009    
+  v4_d20m_or_immediate   0.0       0.641     0.003     0.747    
+  v4_d20m_or_visible     0.0       0.481     0.001     0.293    
+  v4_d24m                0.0       0.624     0.001     0.594    
+  v4_d26m                0.0       0.07      0.001     0.012    
+  v4_d28m                0.0       0.0       0.001     0.013    
+  v4_d30m                0.0       0.073     0.001     0.008    
+  v4_d34m                0.0       0.223     0.0       0.087    
+  v4_d40m                0.0       0.356     0.0       0.317    
+  v4_d8m                 0.057     0.0       0.001     0.007    
+  v4_demo_collision      0.0       0.063     0.001     0.003    
+  v4_demo_oracle         0.0       0.535     0.001     0.356    
+  v4_demo_safe           0.0       0.266     0.001     0.143    
+  v4_no_occluder         0.0       0.191     0.002     0.078    
+  v4_s1p0_d20m           0.0       0.076     0.001     0.015    
+  v4_s2p0_d20m           0.0       0.463     0.001     0.218    
+
+=== SPACE AT FIRST VISIBILITY (E3) ===
+  run                    collision v_at_visible_mps dist_at_visible_m max_decel_pre_crash required_stop_m margin_m 
+  v4_boundary20_r1       True      7.52      8.033     10.2      2.77      5.26     
+  v4_boundary20_r2       False     7.65      8.03      7.45      3.93      4.1      
+  v4_boundary20_r3       True      7.78      8.017     8.01      3.78      4.23     
+  v4_boundary24_r1       False     7.51      11.773    10.93     2.58      9.19     
+  v4_boundary24_r2       False     7.57      11.748    8.64      3.31      8.44     
+  v4_boundary24_r3       False     7.55      11.478    9.01      3.17      8.31     
+  v4_boundary26_r1       True      5.22      13.891    11.94     1.14      12.75    
+  v4_boundary26_r2       True      6.68      13.584    9.42      2.37      11.22    
+  v4_boundary26_r3       False     6.69      13.507    11.71     1.91      11.59    
+  v4_d16m                False     7.7       5.693     10.39     2.85      2.84     
+  v4_d20m                True      7.76      7.977     10.27     2.93      5.05     
+  v4_d20m_or_immediate   False     0.0       16.535    9.84      None      None     
+  v4_d20m_or_visible     False     7.46      8.039     7.33      3.8       4.24     
+  v4_d24m                False     7.66      11.656    8.58      3.42      8.24     
+  v4_d26m                True      5.26      13.735    11.06     1.25      12.48    
+  v4_d28m                False     4.09      16.537    7.48      1.12      15.42    
+  v4_d30m                False     3.56      18.327    11.22     0.56      17.76    
+  v4_d34m                False     7.03      21.045    11.99     2.06      18.98    
+  v4_d40m                False     7.26      27.03     11.98     2.2       24.83    
+  v4_demo_collision      True      7.47      8.066     10.31     2.71      5.36     
+  v4_demo_oracle         False     7.7       7.985     8.99      3.29      4.69     
+  v4_demo_safe           False     7.33      27.041    8.99      2.99      24.05    
+  v4_no_occluder         True      7.45      19.876    4.28      6.48      13.4     
+  v4_s1p0_d20m           False     7.53      5.541     11.82     2.4       3.15     
+  v4_s2p0_d20m           False     7.54      10.286    8.35      3.4       6.89     
+
+=== FRAME CONTINUITY (demo runs) ===
+  v4_demo_collision    chase n=180 gaps=0 cover=1.00  lead n=185 gaps=0 cover=1.00  top n=185 gaps=0 cover=1.00
+  v4_demo_occluder_only chase n=394 gaps=0 cover=1.00  lead n=396 gaps=0 cover=1.00  top n=396 gaps=0 cover=1.00
+  v4_demo_oracle       chase n=247 gaps=0 cover=1.00  lead n=252 gaps=0 cover=1.00  top n=252 gaps=0 cover=1.00
+  v4_demo_safe         chase n=193 gaps=0 cover=1.00  lead n=198 gaps=0 cover=1.00  top n=198 gaps=0 cover=1.00
+
+wrote results to /root/autodl-tmp/carla-autodrive-validation/ghost_pedestrian_v4/results

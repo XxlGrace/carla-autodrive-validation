@@ -1,0 +1,24 @@
+map: Carla/Maps/Town05_Opt
+crossing: (151.48, -43.11) z=0.039 yaw=89.9 road=19 lane=-1
+
+cross-section (lateral offset -> lane type):
+  +2.00 m  lane -2  Parking   width 2.00
+  +2.63 m  lane -3  Shoulder  width 0.63
+  +4.63 m  lane -4  Sidewalk  width 2.00
+  +6.63 m  lane -5  Sidewalk  width 2.00
+
+occluder: vehicle.nissan.patrol  L=4.60 W=1.93 H=1.85
+  center (148.73, -46.60) lateral 2.75 m, nose 1.20 m before crossing
+  bbox bottom z=0.046  road z=0.039  delta=+0.008 m (0 = on the road)
+
+pedestrian visibility from LEAD front camera (1.00 = fully visible):
+  lateral  d=8    d=12   d=16   d=20   d=24   d=30   d=40
+   2.75    0.00  0.00  0.00  0.00  0.00  0.00  0.00
+   3.20    0.00  0.00  0.00  0.00  0.00  0.00  0.00
+   3.60    0.00  0.00  0.00  0.00  0.00  0.00  0.00
+   4.00    0.00  0.00  0.00  0.00  0.00  0.00  0.00
+   4.36    0.00  0.00  0.00  0.00  0.00  0.00  0.67
+   4.50    0.00  0.00  0.00  0.00  0.00  0.33  1.00
+   5.40    0.00  0.20  0.20  0.73  1.00  1.00  1.00
+
+(4.36-6.39 m is the Sidewalk; 1.75-3.75 m is the Parking lane.)
