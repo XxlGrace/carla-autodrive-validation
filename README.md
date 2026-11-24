@@ -47,5 +47,5 @@ bash scripts/stop_carla.sh
 
 - **Observation**：CARLA RGB 相机（前视），`sensor_tick=0.0`，每 tick 同帧落盘。
 - **Control**：目前是占位策略（直行 / 碰撞后制动），输出 `carla.VehicleControl`。
-- **DrivingPolicy / Scenario**：后续接入开源端到端模型与鬼探头场景参数化。
+- **DrivingPolicy / Scenario**：LEAD（TransFuser）端到端模型已接入；鬼探头场景见 `ghost_pedestrian_v4/`（参数化触发距离/行人速度/遮挡位置）。
 - 仓库只提交代码与配置；CARLA 二进制、conda 环境、PNG/CSV/视频均通过 `.gitignore` 排除。
