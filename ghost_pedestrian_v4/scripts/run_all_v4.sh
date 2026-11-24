@@ -31,6 +31,7 @@ bash /root/autodl-tmp/v4_kill_carla.sh "$PORT" >/dev/null 2>&1
   echo "v4_d20m_or_visible.xml pred"
   for r in 1 2 3; do echo "v4_boundary20_r${r}.xml pred"; done
   for r in 1 2 3; do echo "v4_boundary24_r${r}.xml pred"; done
+  for r in 1 2 3; do echo "v4_boundary26_r${r}.xml pred"; done
   for s in 1p0 2p0; do echo "v4_s${s}_d20m.xml pred"; done
 } > /tmp/v4_sweep.txt
 bash "$REPO/scripts/run_v4.sh" /tmp/v4_sweep.txt "$TMO"

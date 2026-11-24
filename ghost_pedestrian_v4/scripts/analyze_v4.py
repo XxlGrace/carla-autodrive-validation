@@ -260,12 +260,14 @@ def perception():
 
 
 def physics():
-    """Was there room once the pedestrian became visible?
+    """Space at first visibility, as an optimistic upper bound.
 
     Uses the trace only: at E3 (first visible) take the ego speed and the
     ego-pedestrian distance, and the largest deceleration actually reached
-    *before* the collision impulse (the summary's max_decel is polluted by the
-    impact). required = v^2 / (2a); margin = distance - required.
+    *before* the collision impulse. required = v^2 / (2a) ignores reaction
+    delay and brake build-up, so it is a best case, not a guarantee; the
+    Oracle runs are the real evidence that a feasible avoidance exists.
+    A 0.5 s reaction-delay variant is reported as a sensitivity.
     """
     rows = []
     for name in sorted(os.listdir(RUNS)):
@@ -290,20 +292,87 @@ def physics():
         v = vis.get("ego_speed")
         d = vis.get("dist_ego_walker")
         req = (v * v / (2.0 * a)) if (v and a) else None
+        delayed = ((v * 0.5 + req) if (v and req is not None) else None)
         rows.append({
             "run": name,
             "collision": bool(s.get("collision_pedestrian")),
             "v_at_visible_mps": fnum(v),
             "dist_at_visible_m": fnum(d, 3),
             "max_decel_pre_crash": fnum(a, 2),
-            "required_stop_m": fnum(req, 2),
-            "margin_m": (fnum(d - req, 2) if (d is not None and req is not None)
-                         else None),
+            "stop_best_case_m": fnum(req, 2),
+            "margin_best_case_m": (fnum(d - req, 2)
+                                   if (d is not None and req is not None)
+                                   else None),
+            "stop_with_0p5s_delay_m": fnum(delayed, 2),
+            "margin_with_0p5s_delay_m": (fnum(d - delayed, 2)
+                                         if (d is not None and delayed is not None)
+                                         else None),
         })
-    show(rows, "SPACE AT FIRST VISIBILITY (E3)",
+    show(rows, "SPACE AT FIRST VISIBILITY (E3, optimistic upper bound)",
          ["collision", "v_at_visible_mps", "dist_at_visible_m",
-          "max_decel_pre_crash", "required_stop_m", "margin_m"])
+          "max_decel_pre_crash", "stop_best_case_m", "margin_best_case_m",
+          "margin_with_0p5s_delay_m"])
     write_csv("v4_physics.csv", rows)
+    return rows
+
+
+def braking():
+    """Brake duty cycle and speed trajectory after release.
+
+    The 26 m repeats show that the *onset* of braking does not predict the
+    outcome: one run brakes earliest yet collides because its braking is
+    pulsed (speed falls then rises again), while a later onset that is held
+    to a stop survives. So record duration, pulse count, longest continuous
+    brake, minimum speed and the speed/lateral at the closest approach.
+    """
+    rows = []
+    for name in sorted(os.listdir(RUNS)):
+        s = load(name)
+        if not s:
+            continue
+        tr = trace(name)
+        rel = [r for r in tr if r.get("released")]
+        if not rel:
+            continue
+        br = [r for r in rel if r.get("brake", 0) > 0.3]
+        runs = []
+        cur = 0
+        for r in rel:
+            if r.get("brake", 0) > 0.3:
+                cur += 1
+            elif cur:
+                runs.append(cur)
+                cur = 0
+        if cur:
+            runs.append(cur)
+        near = None
+        for r in rel:
+            d = r.get("dist_ego_walker")
+            if d is None:
+                continue
+            if near is None or d < near["dist_ego_walker"]:
+                near = r
+        mins = min(rel, key=lambda r: r["ego_speed"])
+        rows.append({
+            "run": name,
+            "collision": bool(s.get("collision_pedestrian")),
+            "brake_onset_s": fnum(s.get("sustained_brake_after_release_s")),
+            "brake_time_s": round(len(br) * 0.05, 2),
+            "brake_pulses": len(runs),
+            "longest_brake_s": round(max(runs) * 0.05, 2) if runs else 0.0,
+            "speed_at_release_mps": fnum(rel[0].get("ego_speed")),
+            "min_speed_after_release_mps": fnum(mins.get("ego_speed")),
+            "speed_at_closest_mps": (fnum(near.get("ego_speed"))
+                                     if near else None),
+            "dist_at_closest_m": (fnum(near.get("dist_ego_walker"), 3)
+                                  if near else None),
+            "ped_lateral_at_closest_m": (fnum(near.get("ped_lateral"))
+                                         if near else None),
+        })
+    show(rows, "BRAKING PROCESS AFTER RELEASE",
+         ["collision", "brake_onset_s", "brake_time_s", "longest_brake_s",
+          "min_speed_after_release_mps", "speed_at_closest_mps"])
+    write_csv("v4_braking.csv", rows)
     return rows
 
 
@@ -349,5 +418,6 @@ if __name__ == "__main__":
     events()
     perception()
     physics()
+    braking()
     frames()
     print("\nwrote results to", RESULTS)

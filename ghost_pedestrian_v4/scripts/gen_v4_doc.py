@@ -47,6 +47,7 @@ repeats = rows("v4_repeats.csv")
 events = load("v4_events.json")
 percept = rows("v4_perception.csv")
 physics = rows("v4_physics.csv")
+braking = rows("v4_braking.csv")
 frames = rows("v4_frames.csv")
 geom = text("geometry_check.txt")
 
@@ -71,15 +72,32 @@ A("")
 if coll:
     A("- 单次距离扫描：**%s m 碰撞**，其余 %d 个距离点安全。" % (
         "、".join("%g" % float(r["trigger_m"]) for r in coll), len(safe)))
-    ph0 = {r["run"]: r for r in physics}.get(coll[0]["run"])
     A("- 被遮挡期间（E1）行人身体被遮挡 %s，且完整落在 LEAD 前视相机视场内。"
       % fmt(coll[0]["occ_before"]))
-    if ph0 and ph0.get("margin_m") not in (None, ""):
-        A("- 首次可见（E3）时自车距行人 %s m、速度 %s m/s；按碰撞前实测的最大"
-          "减速度 %s m/s²，刹停只需要 %s m，**空间余量 %s m**。"
-          % (fmt(ph0["dist_at_visible_m"]), fmt(ph0["v_at_visible_mps"]),
-             fmt(ph0["max_decel_pre_crash"]), fmt(ph0["required_stop_m"]),
-             fmt(ph0["margin_m"])))
+    ov = next((r for r in controls if r["run"] == "v4_d20m_or_visible"), None)
+    if ov:
+        A("- **存在可行的避险控制**：同一 20 m 触发，把决策换成「首次可见即全制动」"
+          "（Oracle）就安全通过，最近距离 %s m —— 这是「来得及」的直接证据，"
+          "不依赖任何减速度估算。" % fmt(ov["min_dist_m"], 2))
+    tri = [next((r for r in braking if r["run"] == "v4_boundary26_r%d" % i), None)
+           for i in (1, 2, 3)]
+    tri = [r for r in tri if r]
+    bad = [r for r in tri if r["collision"] == "True"]
+    ok = [r for r in tri if r["collision"] != "True"]
+    if bad and ok:
+        e = min(bad, key=lambda r: float(r["brake_onset_s"] or 99))
+        g = max(ok, key=lambda r: float(r["brake_onset_s"] or -1))
+        A("- **失效不是单一原因**：26 m 三次重复里，制动最早的那次（E4 = %s s）"
+          "反而碰撞——制动只持续 %s s、最长连续 %s s，速度 %s → %s m/s 后又回升，"
+          "最后以 %s m/s 撞上；制动最晚的那次（E4 = %s s）反而安全——连续 %s s "
+          "制动把车刹到 %s m/s。所以判据要看制动持续时间与速度轨迹，不能只说"
+          "「刹车太晚」。" % (
+              fmt(e["brake_onset_s"]), fmt(e["brake_time_s"]),
+              fmt(e["longest_brake_s"]), fmt(e["speed_at_release_mps"]),
+              fmt(e["min_speed_after_release_mps"]),
+              fmt(e["speed_at_closest_mps"]), fmt(g["brake_onset_s"]),
+              fmt(g["longest_brake_s"]),
+              fmt(g["min_speed_after_release_mps"])))
 for r in repeats:
     A("- **%s m 重复 %s 次：碰撞 %s 次（%.0f%%）**，最小距离 %s–%s m。" % (
         fmt(r["trigger_m"], 0), r["runs"], r["collisions"],
@@ -87,10 +105,10 @@ for r in repeats:
         fmt(r["min_dist_max"], 3)))
 A("")
 A("所以 v4 的结论不是「临界距离 = X m」，而是：**边界附近的碰撞是一个概率带**"
-  "（20 m 与 26 m 各 2/3 碰撞，24 m 0/3），单次碰撞/安全不能当确定的边界；"
-  "可以把结果讲清楚的量是 E3（首次可见）到自车到达的时间差，以及 LEAD 在 E3 "
-  "之后有没有持续制动。被遮挡这件事本身已经用几何测过：释放前行人身体被挡 "
-  "0.89，且完全在 LEAD 前视相机视场内。")
+  "（20 m 与 26 m 各 2/3 碰撞，24 m 0/3），单次碰撞/安全不能当确定的边界。"
+  "可以讲清楚的量是：E3（首次可见）到自车到达的时间差、LEAD 之后制动了多久、"
+  "速度实际降到多少，以及碰撞时行人已经走到哪里。被遮挡这件事本身已用几何"
+  "测过：释放前行人身体被挡 0.89，且完全在 LEAD 前视相机视场内。")
 A("")
 A("")
 
@@ -253,35 +271,114 @@ else:
     A("（尚无对照结果。）")
     A("")
 
-# -------------------------------------------------------------------- events
-A("## 首次可见时还有多少空间")
+# ------------------------------------------------------------------ physics
+A("## 首次可见时的空间上界（不能当作保证）")
 A("")
 if physics:
-    A("把「模型看见得太晚」和「物理上来不及」分开：取 E3（首次可见）那一刻的"
-      "车速与车-人距离，与碰撞前实测到的最大减速度比较。`刹停所需 = v² / 2a`。"
-      "注意 summary 里的 `max_decel` 含碰撞冲量，这里只统计碰撞前。")
+    A("取 E3（首次可见）的车速与车-人距离，用碰撞前峰值减速度算 `v²/2a`。"
+      "这是**乐观上界**：它假设看见的那一瞬间就以峰值减速度开始制动，"
+      "既没有反应延迟，也没有制动建立时间；而且峰值减速度本身取的是整个过程"
+      "的最大瞬时值（已排除碰撞冲量）。所以它只能说明「物理上不是完全没空间」，"
+      "**不能**当作「一定刹得住」的保证。")
     A("")
-    A("| 运行 | 碰撞 | E3 车速 (m/s) | E3 距离 (m) | 碰撞前最大减速度 (m/s²) | 刹停所需 (m) | 余量 (m) |")
-    A("|---|---|---|---|---|---|---|")
+    A("真正的证据是 Oracle 实车制动：同一 20 m 触发，换成「首次可见即全制动」，"
+      "车辆安全通过（见上一节表格与 Oracle 行）。也就是说存在一组合法控制能避免"
+      "这次碰撞，LEAD 没有做到。")
+    A("")
+    A("下表同时给出「加 0.5 s 反应延迟」的敏感性：`v·0.5 + v²/2a`。20 m 档的"
+      "上界余量是 %.2f m，加上 0.5 s 延迟就只剩 %.2f m —— 量级直接变掉，"
+      "正是不能拿上界当结论的原因。" % (
+          float(next(r for r in physics if r["run"] == "v4_d20m")[
+              "margin_best_case_m"] or 0),
+          float(next(r for r in physics if r["run"] == "v4_d20m")[
+              "margin_with_0p5s_delay_m"] or 0)))
+    A("")
+    A("| 运行 | 碰撞 | E3 车速 (m/s) | E3 距离 (m) | 峰值减速度 (m/s²) | 刹停所需·上界 (m) | 上界余量 (m) | 含 0.5 s 延迟 (m) | 延迟后余量 (m) |")
+    A("|---|---|---|---|---|---|---|---|---|")
     for r in physics:
         if not r["dist_at_visible_m"]:
             continue
-        A("| %s | %s | %s | %s | %s | %s | %s |" % (
+        A("| %s | %s | %s | %s | %s | %s | %s | %s | %s |" % (
             r["run"], yes(r["collision"]), fmt(r["v_at_visible_mps"]),
             fmt(r["dist_at_visible_m"], 3), fmt(r["max_decel_pre_crash"]),
-            fmt(r["required_stop_m"]), fmt(r["margin_m"])))
+            fmt(r["stop_best_case_m"]), fmt(r["margin_best_case_m"]),
+            fmt(r["stop_with_0p5s_delay_m"]),
+            fmt(r["margin_with_0p5s_delay_m"])))
     A("")
-    A("余量为正表示「看见之后其实来得及刹住」，失效来自响应时机/反应延迟，"
-      "而不是车速太高或刹车不够。Oracle 那一档的对照直接验证这一点。")
+    A("结论只采用两件事：**Oracle 证明有可行的避险控制**；LEAD 的实际制动过程"
+      "（下一节）说明它为什么没兑现。上界表只用来判断「是不是车速/物理极限」。"
+      "注意有的安全运行（如 16 m）延迟后余量为负——因为行人根本没进车道、"
+      "自车先过去了；这类数字不预测结果，只看量级。")
     A("")
 else:
     A("（尚无数据。）")
     A("")
 
+# ------------------------------------------------------------------ braking
+A("## 制动过程：为什么「刹得早」也会撞")
+A("")
+if braking:
+    A("只看 E4（首次持续制动）会把失效说成「刹车太晚」，但 26 m 的三次重复直接"
+      "否掉了这个单一解释：制动最早的反而撞，制动最晚的反而安全。区别在**制动"
+      "持续了多久、速度轨迹怎么走、撞上时行人已经到哪**。")
+    A("")
+    A("| 运行 | 碰撞 | E4 起始 (s) | 制动总时长 (s) | 脉冲数 | 最长连续 (s) | 释放车速 (m/s) | 最低车速 (m/s) | 最近点车速 (m/s) | 最近点行人横向 (m) |")
+    A("|---|---|---|---|---|---|---|---|---|---|")
+    for name in ("v4_boundary26_r1", "v4_boundary26_r2", "v4_boundary26_r3",
+                 "v4_boundary20_r1", "v4_boundary20_r2", "v4_boundary20_r3",
+                 "v4_boundary24_r1", "v4_d20m_or_visible"):
+        r = next((x for x in braking if x["run"] == name), None)
+        if not r:
+            continue
+        A("| %s | %s | %s | %s | %s | %s | %s | %s | %s | %s |" % (
+            name, yes(r["collision"]), fmt(r["brake_onset_s"]),
+            fmt(r["brake_time_s"]), r["brake_pulses"],
+            fmt(r["longest_brake_s"]), fmt(r["speed_at_release_mps"]),
+            fmt(r["min_speed_after_release_mps"]),
+            fmt(r["speed_at_closest_mps"]), fmt(r["ped_lateral_at_closest_m"])))
+    A("")
+    A("26 m 这组是典型的「脉冲式制动」：LEAD 的制动不是踩住不放，而是 1–2 个 tick "
+      "一下，速度先掉一点、随即回升；两次碰撞在最近点仍有 %s–%s m/s，"
+      "唯一安全的那次是制动连续 %s s、把车速压到 %s m/s。" % (
+          fmt(min(float(r["speed_at_closest_mps"]) for r in bad)),
+          fmt(max(float(r["speed_at_closest_mps"]) for r in bad)),
+          fmt(ok[0]["longest_brake_s"]),
+          fmt(min(float(r["min_speed_after_release_mps"]) for r in ok))))
+    A("")
+    enc = [r for r in braking
+           if r["ped_lateral_at_closest_m"] not in (None, "")
+           and abs(float(r["ped_lateral_at_closest_m"])) <= 1.2]
+    coll_v = [float(r["speed_at_closest_mps"]) for r in enc
+              if r["collision"] == "True"]
+    safe_v = [float(r["speed_at_closest_mps"]) for r in enc
+              if r["collision"] != "True"]
+    if coll_v and safe_v:
+        A("把「最近点时行人确实已在车道内」（横向 ≤1.2 m）的运行挑出来看："
+          "**碰撞组的最近点车速 %.2f–%.2f m/s，安全组 %.2f–%.2f m/s**，"
+          "两组没有重叠。也就是说成败的分界不是 E4 的时刻，而是**自车到达行人位置"
+          "时还剩多少速度**。" % (
+              min(coll_v), max(coll_v), min(safe_v), max(safe_v)))
+        A("")
+    A("所以失效至少有三层，缺一层都可能撞：")
+    A("")
+    A("1. **何时开始**（E4）：被遮挡导致 E3 晚、E4 更晚；")
+    A("2. **制动能否保持**：脉冲式制动只是减速抖动，不产生足够的累计速度下降；")
+    A("3. **行人已经走到哪**：最近点的 `行人横向` 说明碰撞时行人是否已经在自车"
+      "车道内（≈0 或负值），这决定了「同向通过」还是「正面撞上」。")
+    A("")
+    A("这也是为什么 v4.3 的参数搜索不能只调触发距离，还要把「制动脉冲/持续时间」"
+      "作为协议层变量暴露出来。")
+    A("")
+else:
+    A("（尚无数据。）")
+    A("")
+
+# -------------------------------------------------------------------- events
 A("## 事件模型 E1–E5")
 A("")
 A("E1 被遮挡 → E2 释放 → E3 首次可见 → E4 自车持续制动 → E5 结果。"
-  "E4 可以缺失（模型没有响应也是有效结果）。")
+  "E4 可以缺失（模型没有响应也是有效结果）。**E4 只表示「第一次持续制动」**，"
+  "不能单独当失效判据——还要看制动持续多久、速度轨迹和行人位置（见上一节）。")
 A("")
 if events:
     A("| 运行 | E1 遮挡 | E2 释放 (s) | E3 首次可见 (s) | E4 持续制动 (s) | E5 结果 | 最小距离 (m) |")
@@ -390,7 +487,8 @@ A("")
 A("1. **跨路段/跨遮挡物**：同图换一个路段，或把遮挡物换成更高的厢式车/路口转角，"
   "验证「遮挡吃掉 1.5 s 反应窗口」不是这一段路的偶然。")
 A("2. **危险参数生成**：把 E1→E2→E3 的时序约束写成可搜索的目标（例如「要求在自车"
-  "到达前 1.0–1.5 s 才进入车道」），而不是只扫触发距离；这才是 v3 里 P6 想做的事。")
+  "到达前 1.0–1.5 s 才进入车道」），并把「制动能否持续」作为协议层变量，"
+  "而不是只扫触发距离；这才是 v3 里 P6 想做的事。")
 A("3. **传感器级对齐**：记录 LEAD 三路前视相机各自的传感器帧号，补偿 1–2 tick 的"
   "感知延迟，把「模型什么时候拿到信息」和「模型什么时候反应」彻底分开。")
 A("4. **更细的遮挡度量**：用语义分割/深度图算像素级遮挡比例，替代 15 点采样。")

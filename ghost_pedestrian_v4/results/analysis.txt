@@ -82,33 +82,63 @@
   v4_s1p0_d20m           0.0       0.076     0.001     0.015    
   v4_s2p0_d20m           0.0       0.463     0.001     0.218    
 
-=== SPACE AT FIRST VISIBILITY (E3) ===
-  run                    collision v_at_visible_mps dist_at_visible_m max_decel_pre_crash required_stop_m margin_m 
-  v4_boundary20_r1       True      7.52      8.033     10.2      2.77      5.26     
-  v4_boundary20_r2       False     7.65      8.03      7.45      3.93      4.1      
-  v4_boundary20_r3       True      7.78      8.017     8.01      3.78      4.23     
-  v4_boundary24_r1       False     7.51      11.773    10.93     2.58      9.19     
-  v4_boundary24_r2       False     7.57      11.748    8.64      3.31      8.44     
-  v4_boundary24_r3       False     7.55      11.478    9.01      3.17      8.31     
-  v4_boundary26_r1       True      5.22      13.891    11.94     1.14      12.75    
-  v4_boundary26_r2       True      6.68      13.584    9.42      2.37      11.22    
-  v4_boundary26_r3       False     6.69      13.507    11.71     1.91      11.59    
-  v4_d16m                False     7.7       5.693     10.39     2.85      2.84     
-  v4_d20m                True      7.76      7.977     10.27     2.93      5.05     
-  v4_d20m_or_immediate   False     0.0       16.535    9.84      None      None     
-  v4_d20m_or_visible     False     7.46      8.039     7.33      3.8       4.24     
-  v4_d24m                False     7.66      11.656    8.58      3.42      8.24     
-  v4_d26m                True      5.26      13.735    11.06     1.25      12.48    
-  v4_d28m                False     4.09      16.537    7.48      1.12      15.42    
-  v4_d30m                False     3.56      18.327    11.22     0.56      17.76    
-  v4_d34m                False     7.03      21.045    11.99     2.06      18.98    
-  v4_d40m                False     7.26      27.03     11.98     2.2       24.83    
-  v4_demo_collision      True      7.47      8.066     10.31     2.71      5.36     
-  v4_demo_oracle         False     7.7       7.985     8.99      3.29      4.69     
-  v4_demo_safe           False     7.33      27.041    8.99      2.99      24.05    
-  v4_no_occluder         True      7.45      19.876    4.28      6.48      13.4     
-  v4_s1p0_d20m           False     7.53      5.541     11.82     2.4       3.15     
-  v4_s2p0_d20m           False     7.54      10.286    8.35      3.4       6.89     
+=== SPACE AT FIRST VISIBILITY (E3, optimistic upper bound) ===
+  run                    collision v_at_visible_mps dist_at_visible_m max_decel_pre_crash stop_best_case_m margin_best_case_m margin_with_0p5s_delay_m
+  v4_boundary20_r1       True      7.52      8.033     10.2      2.77      5.26      1.5      
+  v4_boundary20_r2       False     7.65      8.03      7.45      3.93      4.1       0.27     
+  v4_boundary20_r3       True      7.78      8.017     8.01      3.78      4.23      0.34     
+  v4_boundary24_r1       False     7.51      11.773    10.93     2.58      9.19      5.43     
+  v4_boundary24_r2       False     7.57      11.748    8.64      3.31      8.44      4.65     
+  v4_boundary24_r3       False     7.55      11.478    9.01      3.17      8.31      4.53     
+  v4_boundary26_r1       True      5.22      13.891    11.94     1.14      12.75     10.14    
+  v4_boundary26_r2       True      6.68      13.584    9.42      2.37      11.22     7.88     
+  v4_boundary26_r3       False     6.69      13.507    11.71     1.91      11.59     8.25     
+  v4_d16m                False     7.7       5.693     10.39     2.85      2.84      -1.01    
+  v4_d20m                True      7.76      7.977     10.27     2.93      5.05      1.17     
+  v4_d20m_or_immediate   False     0.0       16.535    9.84      None      None      None     
+  v4_d20m_or_visible     False     7.46      8.039     7.33      3.8       4.24      0.51     
+  v4_d24m                False     7.66      11.656    8.58      3.42      8.24      4.41     
+  v4_d26m                True      5.26      13.735    11.06     1.25      12.48     9.85     
+  v4_d28m                False     4.09      16.537    7.48      1.12      15.42     13.38    
+  v4_d30m                False     3.56      18.327    11.22     0.56      17.76     15.98    
+  v4_d34m                False     7.03      21.045    11.99     2.06      18.98     15.47    
+  v4_d40m                False     7.26      27.03     11.98     2.2       24.83     21.2     
+  v4_demo_collision      True      7.47      8.066     10.31     2.71      5.36      1.62     
+  v4_demo_oracle         False     7.7       7.985     8.99      3.29      4.69      0.84     
+  v4_demo_safe           False     7.33      27.041    8.99      2.99      24.05     20.38    
+  v4_no_occluder         True      7.45      19.876    4.28      6.48      13.4      9.67     
+  v4_s1p0_d20m           False     7.53      5.541     11.82     2.4       3.15      -0.62    
+  v4_s2p0_d20m           False     7.54      10.286    8.35      3.4       6.89      3.12     
+
+=== BRAKING PROCESS AFTER RELEASE ===
+  run                    collision brake_onset_s brake_time_s longest_brake_s min_speed_after_release_mps speed_at_closest_mps
+  v4_boundary20_r1       True      None      0.05      0.05      7.35      7.76     
+  v4_boundary20_r2       False     1.85      4.2       3.9       0.0       0.0      
+  v4_boundary20_r3       True      None      0.1       0.1       7.0       7.02     
+  v4_boundary24_r1       False     2.5       1.45      1.0       0.0       5.67     
+  v4_boundary24_r2       False     2.35      2.0       1.6       0.0       5.73     
+  v4_boundary24_r3       False     2.3       3.7       3.7       0.0       0.01     
+  v4_boundary26_r1       True      1.2       0.7       0.35      5.21      7.43     
+  v4_boundary26_r2       True      2.85      0.5       0.2       3.3       4.69     
+  v4_boundary26_r3       False     3.05      1.2       0.7       0.01      1.83     
+  v4_d12m                False     1.7       4.25      1.95      0.0       7.33     
+  v4_d16m                False     2.15      4.85      2.8       0.0       7.62     
+  v4_d20m                True      2.8       1.2       0.45      1.08      7.03     
+  v4_d20m_or_immediate   False     0.1       5.9       5.9       0.0       0.0      
+  v4_d20m_or_visible     False     1.7       4.3       4.3       0.0       0.0      
+  v4_d24m                False     2.45      8.2       5.7       0.0       0.01     
+  v4_d26m                True      1.2       1.95      0.65      0.0       6.31     
+  v4_d28m                False     1.25      6.0       2.6       0.0       6.88     
+  v4_d30m                False     1.3       7.3       2.15      0.0       7.35     
+  v4_d34m                False     1.7       6.15      1.95      0.0       7.79     
+  v4_d40m                False     2.45      5.95      2.1       0.0       6.93     
+  v4_d8m                 False     1.2       4.4       2.25      0.0       7.27     
+  v4_demo_collision      True      None      0.05      0.05      7.33      7.66     
+  v4_demo_oracle         False     1.7       4.3       4.3       0.0       0.0      
+  v4_demo_safe           False     2.45      1.1       0.5       0.0       5.0      
+  v4_no_occluder         True      2.65      1.9       0.7       0.0       7.83     
+  v4_s1p0_d20m           False     2.75      3.2       1.65      0.0       7.36     
+  v4_s2p0_d20m           False     1.7       2.15      1.95      0.0       5.54     
 
 === FRAME CONTINUITY (demo runs) ===
   v4_demo_collision    chase n=180 gaps=0 cover=1.00  lead n=185 gaps=0 cover=1.00  top n=185 gaps=0 cover=1.00

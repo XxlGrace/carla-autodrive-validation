@@ -85,11 +85,10 @@ for mode in ("immediate", "visible"):
         dict(trigger_distance="20", oracle_mode=mode, oracle_brake="1.0",
              oracle_delay="0.0"))
 
-# Boundary repeats (20 m = collision side, 24 m = safe side)
-for r in range(1, 4):
-    run("v4_boundary20_r{}".format(r), dict(trigger_distance="20"))
-for r in range(1, 4):
-    run("v4_boundary24_r{}".format(r), dict(trigger_distance="24"))
+# Boundary repeats (20 m / 24 m / 26 m)
+for d in (20, 24, 26):
+    for r in range(1, 4):
+        run("v4_boundary{}_r{}".format(d, r), dict(trigger_distance=str(d)))
 
 # Walker speed at the collision distance
 for sp in ("1.0", "2.0"):
