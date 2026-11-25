@@ -1,22 +1,35 @@
-run,model,dist_m,release_speed_mps,brake_onset_s,brake_time_s,longest_brake_s,min_speed_mps,min_distance_m,outcome
-LEAD d20m_r1,LEAD,20,7.52,,0.05,0.05,7.35,1.091,collision
-LEAD d20m_r2,LEAD,20,7.65,1.85,4.2,3.9,0.0,4.232,safe
-LEAD d20m_r3,LEAD,20,7.78,,0.1,0.1,7.0,1.127,collision
-LEAD d24m_r1,LEAD,24,7.57,2.35,2.0,1.6,0.0,2.608,safe
-LEAD d24m_r2,LEAD,24,7.51,2.5,1.45,1.0,0.0,3.33,safe
-LEAD d24m_r3,LEAD,24,7.55,2.3,3.7,3.7,0.0,4.013,safe
-LEAD d26m_r1,LEAD,26,7.19,1.2,1.2,0.7,6.69,2.199,collision
-LEAD d26m_r2,LEAD,26,5.22,1.4,1.2,0.7,3.3,2.498,collision
-LEAD d26m_r3,LEAD,26,6.69,3.05,1.2,0.7,0.01,2.199,safe
-VAD d20m_r1,VAD,20.0,7.997,0.8,6.15,2.15,-0.01,1.569,safe
-VAD d20m_r2,VAD,20.0,7.87,0.75,5.2,2.3,-0.01,1.461,safe
-VAD d20m_r3,VAD,20.0,7.908,0.8,5.15,1.25,-0.01,1.793,safe
-VAD d24m_r1,VAD,24.0,5.255,1.45,6.7,2.3,-0.01,1.752,safe
-VAD d24m_r2,VAD,24.0,5.709,1.35,6.0,2.3,-0.02,1.665,safe
-VAD d24m_r3,VAD,24.0,5.236,1.45,4.65,0.6,-0.01,1.705,safe
-VAD d26m_r1,VAD,26.0,4.602,1.65,6.0,2.15,-0.01,2.11,safe
-VAD d26m_r2,VAD,26.0,4.894,1.65,5.65,1.05,-0.01,2.244,safe
-VAD d26m_r3,VAD,26.0,4.945,1.65,5.25,2.0,-0.01,2.18,safe
-VAD noocc_d20m_r1,VAD,20.0,7.845,0.25,5.3,1.85,-0.01,1.732,safe
-VAD noocc_d20m_r2,VAD,20.0,7.897,0.3,5.45,1.85,-0.01,2.146,safe
-VAD noocc_d20m_r3,VAD,20.0,7.938,0.3,5.2,0.55,-0.01,1.866,safe
+run,model,condition,dist_m,release_speed_mps,brake_onset_s,brake_time_s,longest_brake_s,min_speed_0_3s,speed_at_passer,min_distance_m,outcome
+LEAD d20m_r1,LEAD,occ+ped,20,7.52,,0.05,0.05,7.35,,1.091,collision
+LEAD d20m_r2,LEAD,occ+ped,20,7.65,1.85,4.2,3.9,0.0,,4.232,safe
+LEAD d20m_r3,LEAD,occ+ped,20,7.78,,0.1,0.1,7.0,,1.127,collision
+LEAD d24m_r1,LEAD,occ+ped,24,7.57,2.35,2.0,1.6,0.0,,2.608,safe
+LEAD d24m_r2,LEAD,occ+ped,24,7.51,2.5,1.45,1.0,0.0,,3.33,safe
+LEAD d24m_r3,LEAD,occ+ped,24,7.55,2.3,3.7,3.7,0.0,,4.013,safe
+LEAD d26m_r1,LEAD,occ+ped,26,7.19,1.2,1.2,0.7,6.69,,2.199,collision
+LEAD d26m_r2,LEAD,occ+ped,26,5.22,1.4,1.2,0.7,3.3,,2.498,collision
+LEAD d26m_r3,LEAD,occ+ped,26,6.69,3.05,1.2,0.7,0.01,,2.199,safe
+d20m,VAD,occ+ped,20.0,7.23,0.75,0.6,0.25,0.02,5.26,1.711,safe
+d20m_r1,VAD,occ+ped,20.0,7.14,0.75,0.45,0.3,0.02,6.59,1.569,safe
+d20m_r2,VAD,occ+ped,20.0,6.91,0.7,0.5,0.2,0.02,7.62,1.461,safe
+d20m_r3,VAD,occ+ped,20.0,7.13,0.75,0.5,0.25,1.03,5.21,1.793,safe
+d24m_r1,VAD,occ+ped,24.0,6.79,1.4,0.45,0.2,0.01,7.88,1.752,safe
+d24m_r2,VAD,occ+ped,24.0,6.49,1.3,0.35,0.35,0.0,8.01,1.665,safe
+d24m_r3,VAD,occ+ped,24.0,6.84,1.4,0.4,0.2,-0.0,7.4,1.705,safe
+d26m_r1,VAD,occ+ped,26.0,7.01,1.6,0.45,0.35,0.0,7.09,2.11,safe
+d26m_r2,VAD,occ+ped,26.0,7.57,1.6,0.35,0.3,0.0,7.34,2.244,safe
+d26m_r3,VAD,occ+ped,26.0,7.52,1.6,0.4,0.35,-0.0,7.35,2.18,safe
+empty_d20m_r1,VAD,empty,20.0,6.82,,0.05,0.05,6.87,,,safe
+empty_d20m_r2,VAD,empty,20.0,6.88,,0.05,0.05,6.91,,,safe
+empty_d20m_r3,VAD,empty,20.0,6.87,,0.1,0.1,6.94,,,safe
+hold_d20m_r1,VAD,occ+ped + hold0.3,20.0,6.08,0.4,0.75,0.4,1.15,5.22,1.879,safe
+hold_d20m_r2,VAD,occ+ped + hold0.3,20.0,7.11,0.55,0.7,0.4,0.01,7.87,1.682,safe
+hold_d20m_r3,VAD,occ+ped + hold0.3,20.0,6.6,0.15,0.9,0.3,-0.01,7.82,1.797,safe
+hyst_d20m_r1,VAD,occ+ped + hyst0.95,20.0,3.1,0.45,0.6,0.35,0.01,5.36,1.984,safe
+hyst_d20m_r2,VAD,occ+ped + hyst0.95,20.0,6.48,0.55,0.55,0.35,0.01,5.24,1.705,safe
+hyst_d20m_r3,VAD,occ+ped + hyst0.95,20.0,6.44,0.1,0.85,0.55,0.0,7.86,1.433,safe
+noocc_d20m_r1,VAD,ped only,20.0,6.9,0.2,0.6,0.4,0.01,7.37,1.732,safe
+noocc_d20m_r2,VAD,ped only,20.0,7.07,0.25,0.8,0.4,0.0,6.9,2.146,safe
+noocc_d20m_r3,VAD,ped only,20.0,6.92,0.25,0.8,0.45,0.07,7.83,1.866,safe
+occonly_d20m,VAD,occluder only,20.0,6.99,0.75,0.25,0.2,0.02,,,safe
+occonly_d20m_r2,VAD,occluder only,20.0,6.85,0.45,0.4,0.35,0.01,,,safe
+occonly_d20m_r3,VAD,occluder only,20.0,6.85,0.8,0.4,0.2,0.01,,,safe
