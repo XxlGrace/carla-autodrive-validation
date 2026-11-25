@@ -1,0 +1,90 @@
+{
+  "status": "final",
+  "town": "Town05_Opt",
+  "trigger_distance_m": 20.0,
+  "actual_trigger_distance_m": 19.817,
+  "trigger_error_m": -0.183,
+  "first_post_release_distance_m": 19.422,
+  "release_speed_mps": 7.908,
+  "release_frame": 160,
+  "release_ego_x": 152.10507202148438,
+  "release_ego_y": -62.91242599487305,
+  "release_walker_x": 147.48104858398438,
+  "release_walker_y": -43.119773864746094,
+  "walker_speed_mps": 1.5,
+  "visible_time_s": 1.6,
+  "occlusion_mean_before_release": 0.885,
+  "in_fov_mean_before_release": 1.0,
+  "occluded_samples": 142,
+  "walker_mode": "physics",
+  "oracle_mode": null,
+  "oracle_planned_start_time_s": null,
+  "oracle_first_active_time_s": null,
+  "oracle_first_active_frame": null,
+  "num_records": 261,
+  "collisions_all": [],
+  "collision_pedestrian": false,
+  "min_distance_m": 1.793,
+  "min_distance_time_s": 11.55,
+  "release_time_s": 7.1000001057982445,
+  "brake_onset_s": 7.650000113993883,
+  "brake_onset_after_release_s": 0.55,
+  "frames_saved": {
+    "lead": 0,
+    "top": 0,
+    "chase": 0
+  },
+  "geometry": {
+    "town": "Town05_Opt",
+    "crossing": [
+      151.48,
+      -43.11
+    ],
+    "crossing_yaw": 89.9,
+    "crossing_road_id": 19,
+    "crossing_lane_id": -1,
+    "crossing_ahead_m": 55.0,
+    "walker_start_off_m": 4.0,
+    "walker_end_off_m": -5.0,
+    "occluder_before_m": 2.0,
+    "occluder": {
+      "x": 148.73,
+      "y": -46.6,
+      "yaw": 89.9,
+      "lane_type": "Parking",
+      "blueprint": "vehicle.nissan.patrol",
+      "length_m": 4.6,
+      "width_m": 1.93,
+      "height_m": 1.85,
+      "bbox_bottom_z": 0.046,
+      "road_z": 0.039,
+      "nose_gap_m": 1.2
+    },
+    "walker": {
+      "start": [
+        147.48,
+        -43.12
+      ],
+      "end": [
+        156.48,
+        -43.13
+      ],
+      "start_off_m": 4.0,
+      "s_offset_m": 0.0,
+      "walk_yaw": -0.1,
+      "blueprint": "walker.pedestrian.0012",
+      "walk_distance_m": 9.0
+    }
+  },
+  "ego_speed_at_release_mps": 7.908,
+  "available_dist_at_release_m": 19.817,
+  "first_visible_after_release_s": 1.6,
+  "ped_lane_entry_after_release_s": 2.2,
+  "ego_cross_after_release_s": 4.1,
+  "ego_speed_at_cross_mps": 4.41,
+  "reaction_window_s": 1.9,
+  "sustained_brake_after_release_s": 0.8,
+  "max_decel_mps2": 11.22,
+  "required_stop_dist_m": 2.79,
+  "physical_margin_m": 17.03
+}

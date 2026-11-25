@@ -1,0 +1,570 @@
+leaderboard/leaderboard/leaderboard_evaluator.py:21: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+  import pkg_resources
+VAD_EXTERNAL_CARLA: reusing CARLA on port 2000
+load_world success , attempts=0
+traffic_manager init success, try_time=0
+leaderboard/leaderboard/leaderboard_evaluator.py:115: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if LooseVersion(dist.version) < LooseVersion('0.9.10'):
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/core/evaluation/kitti_utils/eval.py:9: NumbaDeprecationWarning: The 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
+  def get_thresholds(scores: np.ndarray, num_gt, num_sample_pts=41):
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/core/bbox/box_np_ops.py:786: NumbaDeprecationWarning: The 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
+  def points_in_convex_polygon_jit(points, polygon, clockwise=True):
+
+[1m========= Preparing RouteScenario_0 (repetition 0) =========[0m
+[1m> Loading the world[0m
+[GP4] init name=GP4_vad_d26m_r3 trigger=26.0 speed=1.5 out=/home/lab2439/Work/XXL/vad_ghost/runs/ghost_vad/run_d26m_r3
+[GP4] occluder vehicle.nissan.patrol at (148.73,-46.60) yaw=89.9 lane=Parking nose_gap=1.20
+[GP4] walker at (147.48,-43.12)->(156.48,-43.13) off=4.0 dist=9.00m
+[1m> Setting up the agent[0m
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/models/modules/custom_base_transformer_layer.py:77: UserWarning: The arguments `feedforward_channels` in BaseTransformerLayer has been deprecated, now you should set `feedforward_channels` and other FFN related arguments to a dict named `ffn_cfgs`. 
+  warnings.warn(
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/models/modules/custom_base_transformer_layer.py:77: UserWarning: The arguments `ffn_dropout` in BaseTransformerLayer has been deprecated, now you should set `ffn_drop` and other FFN related arguments to a dict named `ffn_cfgs`. 
+  warnings.warn(
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/models/modules/custom_base_transformer_layer.py:77: UserWarning: The arguments `ffn_num_fcs` in BaseTransformerLayer has been deprecated, now you should set `num_fcs` and other FFN related arguments to a dict named `ffn_cfgs`. 
+  warnings.warn(
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/models/bricks/transformer.py:353: UserWarning: The arguments `feedforward_channels` in BaseTransformerLayer has been deprecated, now you should set `feedforward_channels` and other FFN related arguments to a dict named `ffn_cfgs`. 
+  warnings.warn(
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/models/bricks/transformer.py:353: UserWarning: The arguments `ffn_dropout` in BaseTransformerLayer has been deprecated, now you should set `ffn_drop` and other FFN related arguments to a dict named `ffn_cfgs`. 
+  warnings.warn(
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/models/bricks/transformer.py:353: UserWarning: The arguments `ffn_num_fcs` in BaseTransformerLayer has been deprecated, now you should set `num_fcs` and other FFN related arguments to a dict named `ffn_cfgs`. 
+  warnings.warn(
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/models/bricks/transformer.py:96: UserWarning: The arguments `dropout` in MultiheadAttention has been deprecated, now you can separately set `attn_drop`(float), proj_drop(float), and `dropout_layer`(dict) 
+  warnings.warn('The arguments `dropout` in MultiheadAttention '
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/models/detectors/mvx_two_stage.py:90: UserWarning: DeprecationWarning: pretrained is a deprecated                     key, please consider using init_cfg
+  warnings.warn('DeprecationWarning: pretrained is a deprecated \
+load checkpoint from path: /home/lab2439/Work/XXL/vad_ghost/code/Bench2Drive/ckpts/vad_b2d_base.pth
+[1m> Running the route[0m
+=== [Agent] -- Wallclock = 2026-11-25 21:20:04.703 -- System time = 0.000 -- Game time = 0.050 -- Ratio = 0.000x
+/home/lab2439/Work/XXL/vad_ghost/envs/vad-b2d/lib/python3.8/site-packages/scipy/optimize/_minpack_py.py:178: RuntimeWarning: The iteration is not making good progress, as measured by the 
+  improvement from the last ten iterations.
+  warnings.warn(msg, RuntimeWarning)
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/models/modules/VAD_transformer.py:248: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at ../torch/csrc/utils/tensor_new.cpp:245.)
+  shift = bev_queries.new_tensor(
+/home/lab2439/Work/XXL/vad_ghost/envs/vad-b2d/lib/python3.8/site-packages/torch/functional.py:504: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at ../aten/src/ATen/native/TensorShape.cpp:3483.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+WARNING: Actor model vehicle.* not available. Using instead vehicle.tesla.model3
+WARNING: Actor model vehicle.* not available. Using instead vehicle.tesla.model3
+WARNING: Actor model vehicle.* not available. Using instead vehicle.tesla.model3
+WARNING: Actor model vehicle.* not available. Using instead vehicle.tesla.model3
+WARNING: Actor model vehicle.* not available. Using instead vehicle.tesla.model3
+=== [Agent] -- Wallclock = 2026-11-25 21:20:05.245 -- System time = 0.542 -- Game time = 0.100 -- Ratio = 0.185x
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/core/bbox/coder/fut_nms_free_coder.py:78: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  self.post_center_range = torch.tensor(
+/home/lab2439/Work/XXL/vad_ghost/code/Bench2DriveZoo/mmcv/core/bbox/coder/map_nms_free_coder.py:82: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  self.post_center_range = torch.tensor(
+=== [Agent] -- Wallclock = 2026-11-25 21:20:05.640 -- System time = 0.936 -- Game time = 0.150 -- Ratio = 0.160x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:06.045 -- System time = 1.341 -- Game time = 0.200 -- Ratio = 0.149x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:06.453 -- System time = 1.750 -- Game time = 0.250 -- Ratio = 0.143x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:06.849 -- System time = 2.146 -- Game time = 0.300 -- Ratio = 0.140x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:07.271 -- System time = 2.568 -- Game time = 0.350 -- Ratio = 0.136x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:07.668 -- System time = 2.964 -- Game time = 0.400 -- Ratio = 0.135x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:08.093 -- System time = 3.390 -- Game time = 0.450 -- Ratio = 0.133x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:08.489 -- System time = 3.786 -- Game time = 0.500 -- Ratio = 0.132x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:08.881 -- System time = 4.178 -- Game time = 0.550 -- Ratio = 0.132x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:09.288 -- System time = 4.585 -- Game time = 0.600 -- Ratio = 0.131x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:09.685 -- System time = 4.982 -- Game time = 0.650 -- Ratio = 0.130x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:10.081 -- System time = 5.377 -- Game time = 0.700 -- Ratio = 0.130x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:10.472 -- System time = 5.769 -- Game time = 0.750 -- Ratio = 0.130x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:10.861 -- System time = 6.158 -- Game time = 0.800 -- Ratio = 0.130x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:11.250 -- System time = 6.546 -- Game time = 0.850 -- Ratio = 0.130x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:11.650 -- System time = 6.947 -- Game time = 0.900 -- Ratio = 0.130x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:12.044 -- System time = 7.340 -- Game time = 0.950 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:12.430 -- System time = 7.727 -- Game time = 1.000 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:12.829 -- System time = 8.125 -- Game time = 1.050 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:13.226 -- System time = 8.522 -- Game time = 1.100 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:13.620 -- System time = 8.916 -- Game time = 1.150 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:14.006 -- System time = 9.303 -- Game time = 1.200 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:14.399 -- System time = 9.695 -- Game time = 1.250 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:14.790 -- System time = 10.086 -- Game time = 1.300 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:15.178 -- System time = 10.474 -- Game time = 1.350 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:15.566 -- System time = 10.862 -- Game time = 1.400 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:15.953 -- System time = 11.249 -- Game time = 1.450 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:16.338 -- System time = 11.634 -- Game time = 1.500 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:16.723 -- System time = 12.020 -- Game time = 1.550 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:17.110 -- System time = 12.407 -- Game time = 1.600 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:17.504 -- System time = 12.800 -- Game time = 1.650 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:17.890 -- System time = 13.187 -- Game time = 1.700 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:18.287 -- System time = 13.583 -- Game time = 1.750 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:18.688 -- System time = 13.984 -- Game time = 1.800 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:19.088 -- System time = 14.384 -- Game time = 1.850 -- Ratio = 0.129x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:19.491 -- System time = 14.788 -- Game time = 1.900 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:19.884 -- System time = 15.181 -- Game time = 1.950 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:20.276 -- System time = 15.573 -- Game time = 2.000 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:20.671 -- System time = 15.968 -- Game time = 2.050 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:21.067 -- System time = 16.363 -- Game time = 2.100 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:21.482 -- System time = 16.779 -- Game time = 2.150 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:21.875 -- System time = 17.172 -- Game time = 2.200 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:22.264 -- System time = 17.561 -- Game time = 2.250 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:22.658 -- System time = 17.955 -- Game time = 2.300 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:23.071 -- System time = 18.367 -- Game time = 2.350 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:23.464 -- System time = 18.760 -- Game time = 2.400 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:23.852 -- System time = 19.149 -- Game time = 2.450 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:24.258 -- System time = 19.554 -- Game time = 2.500 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:24.650 -- System time = 19.947 -- Game time = 2.550 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:25.051 -- System time = 20.347 -- Game time = 2.600 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:25.442 -- System time = 20.739 -- Game time = 2.650 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:25.831 -- System time = 21.128 -- Game time = 2.700 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:26.234 -- System time = 21.531 -- Game time = 2.750 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:26.634 -- System time = 21.931 -- Game time = 2.800 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:27.033 -- System time = 22.329 -- Game time = 2.850 -- Ratio = 0.128x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:27.454 -- System time = 22.751 -- Game time = 2.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:27.852 -- System time = 23.149 -- Game time = 2.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:28.242 -- System time = 23.539 -- Game time = 3.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:28.644 -- System time = 23.940 -- Game time = 3.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:29.036 -- System time = 24.333 -- Game time = 3.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:29.423 -- System time = 24.719 -- Game time = 3.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:29.811 -- System time = 25.107 -- Game time = 3.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:30.200 -- System time = 25.496 -- Game time = 3.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:30.592 -- System time = 25.889 -- Game time = 3.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:30.982 -- System time = 26.279 -- Game time = 3.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:31.374 -- System time = 26.670 -- Game time = 3.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:31.764 -- System time = 27.060 -- Game time = 3.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:32.163 -- System time = 27.459 -- Game time = 3.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:32.556 -- System time = 27.853 -- Game time = 3.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:32.953 -- System time = 28.249 -- Game time = 3.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:33.357 -- System time = 28.654 -- Game time = 3.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:33.757 -- System time = 29.054 -- Game time = 3.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:34.152 -- System time = 29.448 -- Game time = 3.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:34.540 -- System time = 29.837 -- Game time = 3.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:34.929 -- System time = 30.225 -- Game time = 3.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:35.322 -- System time = 30.619 -- Game time = 3.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:35.708 -- System time = 31.004 -- Game time = 3.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:36.107 -- System time = 31.404 -- Game time = 4.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:36.507 -- System time = 31.804 -- Game time = 4.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:36.900 -- System time = 32.197 -- Game time = 4.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:37.299 -- System time = 32.596 -- Game time = 4.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:37.706 -- System time = 33.003 -- Game time = 4.200 -- Ratio = 0.127x
+WARNING: Actor model vehicle.* not available. Using instead vehicle.tesla.model3
+=== [Agent] -- Wallclock = 2026-11-25 21:20:38.099 -- System time = 33.396 -- Game time = 4.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:38.483 -- System time = 33.779 -- Game time = 4.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:38.874 -- System time = 34.170 -- Game time = 4.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:39.278 -- System time = 34.574 -- Game time = 4.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:39.663 -- System time = 34.960 -- Game time = 4.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:40.049 -- System time = 35.346 -- Game time = 4.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:40.437 -- System time = 35.733 -- Game time = 4.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:40.835 -- System time = 36.132 -- Game time = 4.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:41.227 -- System time = 36.523 -- Game time = 4.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:41.613 -- System time = 36.909 -- Game time = 4.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:41.997 -- System time = 37.293 -- Game time = 4.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:42.384 -- System time = 37.680 -- Game time = 4.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:42.778 -- System time = 38.074 -- Game time = 4.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:43.173 -- System time = 38.469 -- Game time = 4.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:43.564 -- System time = 38.861 -- Game time = 4.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:43.963 -- System time = 39.260 -- Game time = 5.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:44.352 -- System time = 39.648 -- Game time = 5.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:44.744 -- System time = 40.040 -- Game time = 5.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:45.141 -- System time = 40.437 -- Game time = 5.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:45.534 -- System time = 40.830 -- Game time = 5.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:45.930 -- System time = 41.227 -- Game time = 5.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:46.327 -- System time = 41.623 -- Game time = 5.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:46.720 -- System time = 42.017 -- Game time = 5.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:47.132 -- System time = 42.429 -- Game time = 5.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:47.555 -- System time = 42.852 -- Game time = 5.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:47.944 -- System time = 43.240 -- Game time = 5.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:48.340 -- System time = 43.637 -- Game time = 5.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:48.733 -- System time = 44.029 -- Game time = 5.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:49.128 -- System time = 44.425 -- Game time = 5.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:49.530 -- System time = 44.827 -- Game time = 5.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:49.922 -- System time = 45.218 -- Game time = 5.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:50.326 -- System time = 45.623 -- Game time = 5.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:50.727 -- System time = 46.023 -- Game time = 5.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:51.128 -- System time = 46.424 -- Game time = 5.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:51.539 -- System time = 46.836 -- Game time = 5.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:51.933 -- System time = 47.229 -- Game time = 6.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:52.319 -- System time = 47.615 -- Game time = 6.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:52.698 -- System time = 47.994 -- Game time = 6.100 -- Ratio = 0.127x
+[GP4] RELEASED t=6.100 frame=140 dist=25.870 v=4.945 walker=(147.48,-43.12)
+[GP4] walker physics reasserted; loc=Location(x=147.481049, y=-43.119774, z=0.710105)
+=== [Agent] -- Wallclock = 2026-11-25 21:20:53.089 -- System time = 48.386 -- Game time = 6.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:53.485 -- System time = 48.781 -- Game time = 6.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:53.869 -- System time = 49.166 -- Game time = 6.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:54.259 -- System time = 49.555 -- Game time = 6.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:54.650 -- System time = 49.946 -- Game time = 6.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:55.030 -- System time = 50.327 -- Game time = 6.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:55.419 -- System time = 50.715 -- Game time = 6.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:55.803 -- System time = 51.099 -- Game time = 6.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:56.188 -- System time = 51.485 -- Game time = 6.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:56.576 -- System time = 51.873 -- Game time = 6.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:56.960 -- System time = 52.256 -- Game time = 6.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:57.350 -- System time = 52.647 -- Game time = 6.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:57.750 -- System time = 53.046 -- Game time = 6.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:58.140 -- System time = 53.436 -- Game time = 6.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:58.528 -- System time = 53.825 -- Game time = 6.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:58.925 -- System time = 54.221 -- Game time = 6.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:59.321 -- System time = 54.618 -- Game time = 6.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:20:59.716 -- System time = 55.012 -- Game time = 7.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:00.105 -- System time = 55.401 -- Game time = 7.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:00.492 -- System time = 55.788 -- Game time = 7.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:00.883 -- System time = 56.179 -- Game time = 7.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:01.282 -- System time = 56.579 -- Game time = 7.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:01.672 -- System time = 56.969 -- Game time = 7.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:02.064 -- System time = 57.361 -- Game time = 7.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:02.457 -- System time = 57.753 -- Game time = 7.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:02.844 -- System time = 58.141 -- Game time = 7.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:03.238 -- System time = 58.534 -- Game time = 7.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:03.626 -- System time = 58.923 -- Game time = 7.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:04.021 -- System time = 59.318 -- Game time = 7.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:04.414 -- System time = 59.711 -- Game time = 7.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:04.807 -- System time = 60.104 -- Game time = 7.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:05.204 -- System time = 60.501 -- Game time = 7.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:05.590 -- System time = 60.887 -- Game time = 7.750 -- Ratio = 0.127x
+[GP4] VISIBLE (occ<0.5) t=7.750 occ=0.33 fov=1.00
+=== [Agent] -- Wallclock = 2026-11-25 21:21:05.992 -- System time = 61.289 -- Game time = 7.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:06.400 -- System time = 61.697 -- Game time = 7.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:06.803 -- System time = 62.099 -- Game time = 7.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:07.202 -- System time = 62.499 -- Game time = 7.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:07.606 -- System time = 62.903 -- Game time = 8.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:08.005 -- System time = 63.301 -- Game time = 8.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:08.408 -- System time = 63.705 -- Game time = 8.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:08.805 -- System time = 64.102 -- Game time = 8.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:09.201 -- System time = 64.497 -- Game time = 8.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:09.597 -- System time = 64.894 -- Game time = 8.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:10.000 -- System time = 65.297 -- Game time = 8.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:10.401 -- System time = 65.698 -- Game time = 8.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:10.795 -- System time = 66.092 -- Game time = 8.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:11.211 -- System time = 66.507 -- Game time = 8.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:11.603 -- System time = 66.899 -- Game time = 8.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:12.007 -- System time = 67.303 -- Game time = 8.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:12.412 -- System time = 67.708 -- Game time = 8.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:12.808 -- System time = 68.105 -- Game time = 8.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:13.205 -- System time = 68.501 -- Game time = 8.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:13.600 -- System time = 68.896 -- Game time = 8.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:13.997 -- System time = 69.293 -- Game time = 8.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:14.392 -- System time = 69.689 -- Game time = 8.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:14.796 -- System time = 70.093 -- Game time = 8.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:15.188 -- System time = 70.484 -- Game time = 8.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:15.583 -- System time = 70.880 -- Game time = 9.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:15.974 -- System time = 71.270 -- Game time = 9.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:16.372 -- System time = 71.668 -- Game time = 9.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:16.765 -- System time = 72.062 -- Game time = 9.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:17.168 -- System time = 72.465 -- Game time = 9.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:17.576 -- System time = 72.873 -- Game time = 9.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:17.974 -- System time = 73.270 -- Game time = 9.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:18.366 -- System time = 73.663 -- Game time = 9.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:18.773 -- System time = 74.069 -- Game time = 9.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:19.168 -- System time = 74.464 -- Game time = 9.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:19.571 -- System time = 74.868 -- Game time = 9.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:19.964 -- System time = 75.260 -- Game time = 9.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:20.360 -- System time = 75.656 -- Game time = 9.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:20.756 -- System time = 76.052 -- Game time = 9.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:21.154 -- System time = 76.450 -- Game time = 9.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:21.554 -- System time = 76.850 -- Game time = 9.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:21.951 -- System time = 77.248 -- Game time = 9.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:22.357 -- System time = 77.653 -- Game time = 9.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:22.759 -- System time = 78.056 -- Game time = 9.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:23.157 -- System time = 78.454 -- Game time = 9.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:23.556 -- System time = 78.853 -- Game time = 10.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:23.953 -- System time = 79.249 -- Game time = 10.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:24.349 -- System time = 79.646 -- Game time = 10.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:24.751 -- System time = 80.048 -- Game time = 10.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:25.171 -- System time = 80.468 -- Game time = 10.200 -- Ratio = 0.127x
+WARNING: Actor model vehicle.* not available. Using instead vehicle.tesla.model3
+=== [Agent] -- Wallclock = 2026-11-25 21:21:25.581 -- System time = 80.877 -- Game time = 10.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:25.980 -- System time = 81.276 -- Game time = 10.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:26.402 -- System time = 81.698 -- Game time = 10.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:26.802 -- System time = 82.099 -- Game time = 10.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:27.196 -- System time = 82.493 -- Game time = 10.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:27.590 -- System time = 82.887 -- Game time = 10.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:27.980 -- System time = 83.276 -- Game time = 10.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:28.368 -- System time = 83.665 -- Game time = 10.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:28.761 -- System time = 84.057 -- Game time = 10.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:29.154 -- System time = 84.450 -- Game time = 10.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:29.546 -- System time = 84.842 -- Game time = 10.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:29.938 -- System time = 85.235 -- Game time = 10.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:30.332 -- System time = 85.628 -- Game time = 10.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:30.721 -- System time = 86.017 -- Game time = 10.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:31.108 -- System time = 86.405 -- Game time = 10.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:31.512 -- System time = 86.808 -- Game time = 11.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:31.909 -- System time = 87.206 -- Game time = 11.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:32.300 -- System time = 87.597 -- Game time = 11.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:32.692 -- System time = 87.989 -- Game time = 11.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:33.086 -- System time = 88.382 -- Game time = 11.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:33.482 -- System time = 88.778 -- Game time = 11.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:33.873 -- System time = 89.170 -- Game time = 11.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:34.270 -- System time = 89.567 -- Game time = 11.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:34.667 -- System time = 89.964 -- Game time = 11.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:35.059 -- System time = 90.355 -- Game time = 11.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:35.454 -- System time = 90.751 -- Game time = 11.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:35.844 -- System time = 91.141 -- Game time = 11.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:36.237 -- System time = 91.534 -- Game time = 11.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:36.628 -- System time = 91.924 -- Game time = 11.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:37.017 -- System time = 92.313 -- Game time = 11.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:37.415 -- System time = 92.711 -- Game time = 11.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:37.810 -- System time = 93.107 -- Game time = 11.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:38.217 -- System time = 93.514 -- Game time = 11.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:38.612 -- System time = 93.909 -- Game time = 11.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:39.011 -- System time = 94.308 -- Game time = 11.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:39.414 -- System time = 94.711 -- Game time = 12.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:39.809 -- System time = 95.105 -- Game time = 12.050 -- Ratio = 0.127x
+Trying to remove a non-existing actor id 1326
+[GP4] dumped 241 records, frames={'lead': 0, 'top': 0, 'chase': 0}, ped_collision=False, occ=0.866
+=== [Agent] -- Wallclock = 2026-11-25 21:21:40.200 -- System time = 95.497 -- Game time = 12.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:40.593 -- System time = 95.890 -- Game time = 12.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:40.982 -- System time = 96.279 -- Game time = 12.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:41.385 -- System time = 96.682 -- Game time = 12.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:41.780 -- System time = 97.076 -- Game time = 12.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:42.172 -- System time = 97.468 -- Game time = 12.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:42.558 -- System time = 97.854 -- Game time = 12.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:42.955 -- System time = 98.251 -- Game time = 12.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:43.351 -- System time = 98.648 -- Game time = 12.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:43.745 -- System time = 99.042 -- Game time = 12.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:44.137 -- System time = 99.434 -- Game time = 12.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:44.531 -- System time = 99.828 -- Game time = 12.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:44.920 -- System time = 100.217 -- Game time = 12.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:45.311 -- System time = 100.607 -- Game time = 12.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:45.698 -- System time = 100.995 -- Game time = 12.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:46.089 -- System time = 101.386 -- Game time = 12.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:46.480 -- System time = 101.777 -- Game time = 12.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:46.876 -- System time = 102.172 -- Game time = 12.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:47.269 -- System time = 102.566 -- Game time = 13.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:47.656 -- System time = 102.952 -- Game time = 13.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:48.045 -- System time = 103.341 -- Game time = 13.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:48.455 -- System time = 103.752 -- Game time = 13.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:48.852 -- System time = 104.148 -- Game time = 13.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:49.245 -- System time = 104.541 -- Game time = 13.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:49.640 -- System time = 104.936 -- Game time = 13.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:50.034 -- System time = 105.331 -- Game time = 13.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:50.423 -- System time = 105.719 -- Game time = 13.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:50.811 -- System time = 106.108 -- Game time = 13.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:51.209 -- System time = 106.506 -- Game time = 13.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:51.603 -- System time = 106.900 -- Game time = 13.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:51.992 -- System time = 107.288 -- Game time = 13.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:52.383 -- System time = 107.680 -- Game time = 13.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:52.785 -- System time = 108.082 -- Game time = 13.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:53.177 -- System time = 108.473 -- Game time = 13.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:53.584 -- System time = 108.880 -- Game time = 13.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:53.974 -- System time = 109.270 -- Game time = 13.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:54.383 -- System time = 109.679 -- Game time = 13.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:54.786 -- System time = 110.082 -- Game time = 13.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:55.179 -- System time = 110.475 -- Game time = 14.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:55.580 -- System time = 110.876 -- Game time = 14.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:55.988 -- System time = 111.285 -- Game time = 14.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:56.383 -- System time = 111.680 -- Game time = 14.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:56.779 -- System time = 112.075 -- Game time = 14.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:57.193 -- System time = 112.490 -- Game time = 14.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:57.590 -- System time = 112.887 -- Game time = 14.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:57.990 -- System time = 113.287 -- Game time = 14.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:58.391 -- System time = 113.688 -- Game time = 14.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:58.787 -- System time = 114.083 -- Game time = 14.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:59.180 -- System time = 114.476 -- Game time = 14.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:59.577 -- System time = 114.874 -- Game time = 14.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:21:59.983 -- System time = 115.279 -- Game time = 14.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:00.378 -- System time = 115.675 -- Game time = 14.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:00.790 -- System time = 116.086 -- Game time = 14.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:01.187 -- System time = 116.483 -- Game time = 14.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:01.591 -- System time = 116.888 -- Game time = 14.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:01.988 -- System time = 117.284 -- Game time = 14.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:02.385 -- System time = 117.681 -- Game time = 14.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:02.777 -- System time = 118.074 -- Game time = 14.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:03.189 -- System time = 118.485 -- Game time = 15.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:03.584 -- System time = 118.881 -- Game time = 15.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:03.977 -- System time = 119.274 -- Game time = 15.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:04.371 -- System time = 119.668 -- Game time = 15.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:04.763 -- System time = 120.060 -- Game time = 15.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:05.151 -- System time = 120.447 -- Game time = 15.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:05.561 -- System time = 120.857 -- Game time = 15.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:05.951 -- System time = 121.248 -- Game time = 15.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:06.362 -- System time = 121.658 -- Game time = 15.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:06.754 -- System time = 122.051 -- Game time = 15.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:07.147 -- System time = 122.444 -- Game time = 15.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:07.547 -- System time = 122.843 -- Game time = 15.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:07.938 -- System time = 123.235 -- Game time = 15.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:08.329 -- System time = 123.626 -- Game time = 15.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:08.722 -- System time = 124.019 -- Game time = 15.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:09.122 -- System time = 124.419 -- Game time = 15.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:09.561 -- System time = 124.857 -- Game time = 15.800 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:09.951 -- System time = 125.247 -- Game time = 15.850 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:10.361 -- System time = 125.658 -- Game time = 15.900 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:10.758 -- System time = 126.054 -- Game time = 15.950 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:11.162 -- System time = 126.459 -- Game time = 16.000 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:11.564 -- System time = 126.860 -- Game time = 16.050 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:11.959 -- System time = 127.255 -- Game time = 16.100 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:12.360 -- System time = 127.656 -- Game time = 16.150 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:12.751 -- System time = 128.047 -- Game time = 16.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:13.139 -- System time = 128.435 -- Game time = 16.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:13.539 -- System time = 128.835 -- Game time = 16.300 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:13.926 -- System time = 129.223 -- Game time = 16.350 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:14.316 -- System time = 129.613 -- Game time = 16.400 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:14.707 -- System time = 130.004 -- Game time = 16.450 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:15.104 -- System time = 130.401 -- Game time = 16.500 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:15.504 -- System time = 130.801 -- Game time = 16.550 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:15.896 -- System time = 131.193 -- Game time = 16.600 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:16.288 -- System time = 131.585 -- Game time = 16.650 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:16.686 -- System time = 131.983 -- Game time = 16.700 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:17.088 -- System time = 132.385 -- Game time = 16.750 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:17.517 -- System time = 132.813 -- Game time = 16.800 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:17.913 -- System time = 133.209 -- Game time = 16.850 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:18.308 -- System time = 133.604 -- Game time = 16.900 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:18.705 -- System time = 134.002 -- Game time = 16.950 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:19.105 -- System time = 134.401 -- Game time = 17.000 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:19.502 -- System time = 134.799 -- Game time = 17.050 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:19.892 -- System time = 135.189 -- Game time = 17.100 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:20.280 -- System time = 135.577 -- Game time = 17.150 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:20.669 -- System time = 135.966 -- Game time = 17.200 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:21.065 -- System time = 136.361 -- Game time = 17.250 -- Ratio = 0.127x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:21.467 -- System time = 136.764 -- Game time = 17.300 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:21.868 -- System time = 137.165 -- Game time = 17.350 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:22.283 -- System time = 137.579 -- Game time = 17.400 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:22.686 -- System time = 137.983 -- Game time = 17.450 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:23.087 -- System time = 138.383 -- Game time = 17.500 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:23.500 -- System time = 138.797 -- Game time = 17.550 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:23.895 -- System time = 139.191 -- Game time = 17.600 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:24.297 -- System time = 139.593 -- Game time = 17.650 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:24.699 -- System time = 139.996 -- Game time = 17.700 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:25.092 -- System time = 140.388 -- Game time = 17.750 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:25.502 -- System time = 140.798 -- Game time = 17.800 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:25.895 -- System time = 141.192 -- Game time = 17.850 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:26.288 -- System time = 141.584 -- Game time = 17.900 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:26.685 -- System time = 141.982 -- Game time = 17.950 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:27.092 -- System time = 142.389 -- Game time = 18.000 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:27.536 -- System time = 142.833 -- Game time = 18.050 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:27.936 -- System time = 143.232 -- Game time = 18.100 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:28.331 -- System time = 143.628 -- Game time = 18.150 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:28.729 -- System time = 144.026 -- Game time = 18.200 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:29.132 -- System time = 144.428 -- Game time = 18.250 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:29.577 -- System time = 144.873 -- Game time = 18.300 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:29.991 -- System time = 145.287 -- Game time = 18.350 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:30.399 -- System time = 145.695 -- Game time = 18.400 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:30.795 -- System time = 146.092 -- Game time = 18.450 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:31.204 -- System time = 146.500 -- Game time = 18.500 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:31.605 -- System time = 146.902 -- Game time = 18.550 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:32.000 -- System time = 147.296 -- Game time = 18.600 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:32.394 -- System time = 147.690 -- Game time = 18.650 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:32.789 -- System time = 148.086 -- Game time = 18.700 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:33.187 -- System time = 148.483 -- Game time = 18.750 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:33.599 -- System time = 148.896 -- Game time = 18.800 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:34.011 -- System time = 149.308 -- Game time = 18.850 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:34.420 -- System time = 149.716 -- Game time = 18.900 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:34.813 -- System time = 150.110 -- Game time = 18.950 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:35.228 -- System time = 150.524 -- Game time = 19.000 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:35.646 -- System time = 150.943 -- Game time = 19.050 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:36.037 -- System time = 151.334 -- Game time = 19.100 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:36.424 -- System time = 151.721 -- Game time = 19.150 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:36.816 -- System time = 152.113 -- Game time = 19.200 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:37.214 -- System time = 152.511 -- Game time = 19.250 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:37.610 -- System time = 152.907 -- Game time = 19.300 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:38.004 -- System time = 153.300 -- Game time = 19.350 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:38.393 -- System time = 153.689 -- Game time = 19.400 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:38.788 -- System time = 154.084 -- Game time = 19.450 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:39.181 -- System time = 154.477 -- Game time = 19.500 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:39.596 -- System time = 154.892 -- Game time = 19.550 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:39.991 -- System time = 155.288 -- Game time = 19.600 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:40.391 -- System time = 155.687 -- Game time = 19.650 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:40.782 -- System time = 156.079 -- Game time = 19.700 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:41.180 -- System time = 156.477 -- Game time = 19.750 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:41.584 -- System time = 156.881 -- Game time = 19.800 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:41.985 -- System time = 157.282 -- Game time = 19.850 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:42.390 -- System time = 157.687 -- Game time = 19.900 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:42.788 -- System time = 158.084 -- Game time = 19.950 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:43.178 -- System time = 158.475 -- Game time = 20.000 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:43.572 -- System time = 158.869 -- Game time = 20.050 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:43.962 -- System time = 159.259 -- Game time = 20.100 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:44.354 -- System time = 159.651 -- Game time = 20.150 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:44.763 -- System time = 160.059 -- Game time = 20.200 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:45.151 -- System time = 160.448 -- Game time = 20.250 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:45.547 -- System time = 160.843 -- Game time = 20.300 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:45.945 -- System time = 161.241 -- Game time = 20.350 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:46.344 -- System time = 161.640 -- Game time = 20.400 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:46.736 -- System time = 162.032 -- Game time = 20.450 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:47.134 -- System time = 162.431 -- Game time = 20.500 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:47.534 -- System time = 162.830 -- Game time = 20.550 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:47.930 -- System time = 163.227 -- Game time = 20.600 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:48.326 -- System time = 163.623 -- Game time = 20.650 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:48.717 -- System time = 164.013 -- Game time = 20.700 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:49.112 -- System time = 164.409 -- Game time = 20.750 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:49.506 -- System time = 164.802 -- Game time = 20.800 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:49.900 -- System time = 165.197 -- Game time = 20.850 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:50.297 -- System time = 165.593 -- Game time = 20.900 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:50.692 -- System time = 165.988 -- Game time = 20.950 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:51.086 -- System time = 166.383 -- Game time = 21.000 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:51.509 -- System time = 166.805 -- Game time = 21.050 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:51.908 -- System time = 167.204 -- Game time = 21.100 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:52.308 -- System time = 167.605 -- Game time = 21.150 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:52.718 -- System time = 168.014 -- Game time = 21.200 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:53.127 -- System time = 168.424 -- Game time = 21.250 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:53.548 -- System time = 168.845 -- Game time = 21.300 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:53.954 -- System time = 169.250 -- Game time = 21.350 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:54.358 -- System time = 169.654 -- Game time = 21.400 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:54.759 -- System time = 170.056 -- Game time = 21.450 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:55.182 -- System time = 170.479 -- Game time = 21.500 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:55.579 -- System time = 170.876 -- Game time = 21.550 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:55.981 -- System time = 171.278 -- Game time = 21.600 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:56.383 -- System time = 171.680 -- Game time = 21.650 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:56.792 -- System time = 172.088 -- Game time = 21.700 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:57.198 -- System time = 172.494 -- Game time = 21.750 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:57.609 -- System time = 172.905 -- Game time = 21.800 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:58.004 -- System time = 173.300 -- Game time = 21.850 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:58.409 -- System time = 173.705 -- Game time = 21.900 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:58.800 -- System time = 174.096 -- Game time = 21.950 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:59.202 -- System time = 174.499 -- Game time = 22.000 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:22:59.615 -- System time = 174.911 -- Game time = 22.050 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:00.015 -- System time = 175.311 -- Game time = 22.100 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:00.416 -- System time = 175.712 -- Game time = 22.150 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:00.812 -- System time = 176.109 -- Game time = 22.200 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:01.217 -- System time = 176.514 -- Game time = 22.250 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:01.610 -- System time = 176.906 -- Game time = 22.300 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:02.007 -- System time = 177.304 -- Game time = 22.350 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:02.408 -- System time = 177.705 -- Game time = 22.400 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:02.802 -- System time = 178.098 -- Game time = 22.450 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:03.203 -- System time = 178.499 -- Game time = 22.500 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:03.605 -- System time = 178.901 -- Game time = 22.550 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:03.997 -- System time = 179.293 -- Game time = 22.600 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:04.391 -- System time = 179.687 -- Game time = 22.650 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:04.777 -- System time = 180.074 -- Game time = 22.700 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:05.166 -- System time = 180.463 -- Game time = 22.750 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:05.563 -- System time = 180.859 -- Game time = 22.800 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:05.965 -- System time = 181.262 -- Game time = 22.850 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:06.362 -- System time = 181.659 -- Game time = 22.900 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:06.757 -- System time = 182.053 -- Game time = 22.950 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:07.167 -- System time = 182.463 -- Game time = 23.000 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:07.573 -- System time = 182.869 -- Game time = 23.050 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:07.973 -- System time = 183.270 -- Game time = 23.100 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:08.368 -- System time = 183.665 -- Game time = 23.150 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:08.765 -- System time = 184.062 -- Game time = 23.200 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:09.155 -- System time = 184.451 -- Game time = 23.250 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:09.549 -- System time = 184.846 -- Game time = 23.300 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:09.938 -- System time = 185.234 -- Game time = 23.350 -- Ratio = 0.126x
+=== [Agent] -- Wallclock = 2026-11-25 21:23:10.326 -- System time = 185.623 -- Game time = 23.400 -- Ratio = 0.126x
+[1m> Stopping the route[0m
+
+[1m========= Results of RouteScenario_0 (repetition 0) ------ [91mFAILURE[0m [1m=========[0m
+
+╒═══════════════════════╤═════════════════════╕
+│ Start Time            │ 2026-11-25 21:20:04 │
+├───────────────────────┼─────────────────────┤
+│ End Time              │ 2026-11-25 21:23:10 │
+├───────────────────────┼─────────────────────┤
+│ System Time           │ 186.19s             │
+├───────────────────────┼─────────────────────┤
+│ Game Time             │ 23.4s               │
+├───────────────────────┼─────────────────────┤
+│ Ratio (Game / System) │ 0.126               │
+╘═══════════════════════╧═════════════════════╛
+
+╒═══════════════════════╤═════════╤══════════╕
+│ Criterion             │ Result  │ Value    │
+├───────────────────────┼─────────┼──────────┤
+│ RouteCompletionTest   │ [92mSUCCESS[0m │ 100 %    │
+├───────────────────────┼─────────┼──────────┤
+│ OutsideRouteLanesTest │ [92mSUCCESS[0m │ 0 %      │
+├───────────────────────┼─────────┼──────────┤
+│ CollisionTest         │ [92mSUCCESS[0m │ 0 times  │
+├───────────────────────┼─────────┼──────────┤
+│ RunningRedLightTest   │ [92mSUCCESS[0m │ 0 times  │
+├───────────────────────┼─────────┼──────────┤
+│ RunningStopTest       │ [92mSUCCESS[0m │ 0 times  │
+├───────────────────────┼─────────┼──────────┤
+│ MinSpeedTest          │ [91mFAILURE[0m │ 100.28 % │
+├───────────────────────┼─────────┼──────────┤
+│ InRouteTest           │ [92mSUCCESS[0m │          │
+├───────────────────────┼─────────┼──────────┤
+│ AgentBlockedTest      │ [92mSUCCESS[0m │          │
+├───────────────────────┼─────────┼──────────┤
+│ Timeout               │ [92mSUCCESS[0m │          │
+╘═══════════════════════╧═════════╧══════════╛
+
+[1m> Registering the route statistics[0m
+False
+cost time=191.82695293426514
+[1m> Registering the global statistics[0m
+EVALUATOR_RC=0

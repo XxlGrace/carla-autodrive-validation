@@ -1,0 +1,77 @@
+{
+  "status": "final",
+  "town": "Town05_Opt",
+  "trigger_distance_m": 20.0,
+  "actual_trigger_distance_m": 19.995,
+  "trigger_error_m": -0.005,
+  "first_post_release_distance_m": 19.599,
+  "release_speed_mps": 7.938,
+  "release_frame": 144,
+  "release_ego_x": 152.22750854492188,
+  "release_ego_y": -63.08651351928711,
+  "release_walker_x": 147.48104858398438,
+  "release_walker_y": -43.119773864746094,
+  "walker_speed_mps": 1.5,
+  "visible_time_s": 0.05,
+  "occlusion_mean_before_release": 0.0,
+  "in_fov_mean_before_release": 1.0,
+  "occluded_samples": 127,
+  "walker_mode": "physics",
+  "oracle_mode": null,
+  "oracle_planned_start_time_s": null,
+  "oracle_first_active_time_s": null,
+  "oracle_first_active_frame": null,
+  "num_records": 246,
+  "collisions_all": [],
+  "collision_pedestrian": false,
+  "min_distance_m": 1.866,
+  "min_distance_time_s": 10.95,
+  "release_time_s": 6.350000094622374,
+  "brake_onset_s": 6.650000099092722,
+  "brake_onset_after_release_s": 0.3,
+  "frames_saved": {
+    "lead": 0,
+    "top": 0,
+    "chase": 0
+  },
+  "geometry": {
+    "town": "Town05_Opt",
+    "crossing": [
+      151.48,
+      -43.11
+    ],
+    "crossing_yaw": 89.9,
+    "crossing_road_id": 19,
+    "crossing_lane_id": -1,
+    "crossing_ahead_m": 55.0,
+    "walker_start_off_m": 4.0,
+    "walker_end_off_m": -5.0,
+    "occluder_before_m": 2.0,
+    "walker": {
+      "start": [
+        147.48,
+        -43.12
+      ],
+      "end": [
+        156.48,
+        -43.13
+      ],
+      "start_off_m": 4.0,
+      "s_offset_m": 0.0,
+      "walk_yaw": -0.1,
+      "blueprint": "walker.pedestrian.0012",
+      "walk_distance_m": 9.0
+    }
+  },
+  "ego_speed_at_release_mps": 7.938,
+  "available_dist_at_release_m": 19.995,
+  "first_visible_after_release_s": 0.05,
+  "ped_lane_entry_after_release_s": 2.2,
+  "ego_cross_after_release_s": 4.35,
+  "ego_speed_at_cross_mps": 6.777,
+  "reaction_window_s": 2.15,
+  "sustained_brake_after_release_s": 0.3,
+  "max_decel_mps2": 9.61,
+  "required_stop_dist_m": 3.28,
+  "physical_margin_m": 16.72
+}
